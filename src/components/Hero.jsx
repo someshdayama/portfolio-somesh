@@ -7,7 +7,7 @@ const Hero = () => {
   const [title, setTitle] = useState("Lead Problem Solver");
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   const springX = useSpring(mouseX, { damping: 50, stiffness: 400 });
   const springY = useSpring(mouseY, { damping: 50, stiffness: 400 });
 
@@ -22,7 +22,7 @@ const Hero = () => {
   };
 
   useEffect(() => {
-    const phrases = ["Lead Problem Solver", "Strategic Architect", "DevOps Engineer", "Resolution Finder"];
+    const phrases = ["DevOps Engineer", "Scrum Master", "Weekend Vibe Coder"];
     let i = 0;
     const interval = setInterval(() => {
       i = (i + 1) % phrases.length;
@@ -48,14 +48,14 @@ const Hero = () => {
   };
 
   return (
-    <section 
-      id="hero" 
-      className="hero" 
+    <section
+      id="hero"
+      className="hero"
       onMouseMove={handleMouseMove}
       style={{ perspective: '1200px', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       <div className="grid-bg"></div>
-      
+
       <motion.div
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
         className="hero-content"
@@ -73,9 +73,9 @@ const Hero = () => {
           <h2 className="text-gradient" style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)', minHeight: '1.2em', marginBottom: '2.5rem' }}>
             {title}
           </h2>
-          
+
           <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', maxWidth: '700px', margin: '0 auto 4rem', lineHeight: '1.7' }}>
-            Building <span style={{ color: 'white', fontWeight: 600 }}>resilient cloud systems</span> and orchestrating 
+            Building <span style={{ color: 'white', fontWeight: 600 }}>resilient cloud systems</span> and orchestrating
             high-performing teams to resolve complex architecture bottlenecks.
           </p>
 
