@@ -4,7 +4,7 @@ import { Cloud, Cpu, Sparkles, ChevronDown } from 'lucide-react';
 import Magnetic from './ui/Magnetic';
 
 const Hero = () => {
-  const [title, setTitle] = useState("Lead Problem Solver");
+  const [title, setTitle] = useState("DevOps Engineer");
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 

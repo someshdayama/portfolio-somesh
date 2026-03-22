@@ -8,7 +8,7 @@ const About = () => {
     { label: "Cost Optimization", value: "Substantial", sub: "GCP & AWS Savings", icon: <BarChart3 /> },
     { label: "Reliability", value: "High-Uptime", sub: "Proactive Monitoring", icon: <Settings /> },
     { label: "Experience", value: "3+ Years", sub: "Cloud-Native & SRE", icon: <Cloud /> },
-    { label: "Lead Response", value: "100%", sub: "Incident Management", icon: <Terminal /> }
+    { label: "Response", value: "100%", sub: "Incident Management", icon: <Terminal /> }
   ];
 
   return (
@@ -16,12 +16,9 @@ const About = () => {
       <SectionReveal>
         <div className="glass glass-card" style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
           <div className="section-label" style={{ justifyContent: 'center' }}>Identity</div>
-          <h2 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', marginBottom: '2rem' }}>
-            Lead Problem Solver & <br/> Resolution Finder
-          </h2>
           <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
-            Software Engineer with a career foundation built on DevOps and Cloud Infrastructure. 
-            Experienced Scrum Master with a strong background in people management, 
+            Software Engineer with a career foundation built on DevOps and Cloud Infrastructure.
+            Experienced Scrum Master with a strong background in people management,
             adept at bridging the gap between complex engineering requirements and high-performing team dynamics.
           </p>
         </div>
