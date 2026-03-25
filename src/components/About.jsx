@@ -7,8 +7,7 @@ const About = () => {
   const stats = [
     { label: "Cost Optimization", value: "Substantial", sub: "GCP & AWS Savings", icon: <BarChart3 /> },
     { label: "Reliability", value: "High-Uptime", sub: "Proactive Monitoring", icon: <Settings /> },
-    { label: "Experience", value: "3+ Years", sub: "Cloud-Native & SRE", icon: <Cloud /> },
-    { label: "Response", value: "100%", sub: "Incident Management", icon: <Terminal /> }
+    { label: "Experience", value: "3+ Years", sub: "Cloud-Native & SRE", icon: <Cloud /> }
   ];
 
   return (
@@ -17,9 +16,9 @@ const About = () => {
         <div className="glass glass-card" style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
           <div className="section-label" style={{ justifyContent: 'center' }}>Identity</div>
           <p style={{ fontSize: '1.25rem', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
-            Software Engineer with a career foundation built on DevOps and Cloud Infrastructure.
-            Experienced Scrum Master with a strong background in people management,
-            adept at bridging the gap between complex engineering requirements and high-performing team dynamics.
+            A Software Engineer with a deep foundation in DevOps and Cloud Infrastructure, currently serving as a Release
+            Train Engineer (RTE) for a 17-member team. I blend technical expertise from cloud side with Scrum Master role to bridge
+            the gap between complex engineering requirements.
           </p>
         </div>
       </SectionReveal>

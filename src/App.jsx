@@ -7,12 +7,10 @@ import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Education from './components/Education';
 import Contact from './components/Contact';
-import CustomCursor from './components/ui/CustomCursor';
 
 function App() {
   return (
     <div className="app-container">
-      <CustomCursor />
       <Navbar />
       
       <main>
@@ -34,11 +32,6 @@ function App() {
         main {
           position: relative;
           z-index: 1;
-        }
-        @media (max-width: 768px) {
-          * {
-            cursor: auto !important;
-          }
         }
       `}} />
     </div>
