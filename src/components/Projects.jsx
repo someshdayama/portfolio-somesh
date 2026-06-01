@@ -2,37 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 import MaskedText from './ui/MaskedText';
-import velocityImg from '../assets/velocity.png';
-import weatherImg from '../assets/weather.png';
-import resumeImg from '../assets/resume-builder.png';
+import { PROFILE } from '../data/profile';
 
 const Projects = () => {
-  const projects = [
-    {
-      title: "Velocity",
-      description: "Network Speed Testing Application",
-      link: "https://velocity-speedtest.netlify.app/",
-      image: velocityImg,
-      year: "2024"
-    },
-    {
-      title: "Ambient Weather",
-      description: "Real-time atmospheric data",
-      link: "https://ambientweather.netlify.app/",
-      image: weatherImg,
-      year: "2023"
-    },
-    {
-      title: "Promptly",
-      description: "AI Resume Generator",
-      link: "https://resumebuilder-promptly.vercel.app/",
-      image: resumeImg,
-      year: "2024"
-    }
-  ];
+  const projects = PROFILE.projects;
 
   return (
-    <section id="work" style={{ padding: '10vw 5vw', backgroundColor: 'transparent' }}>
+    <section id="projects" style={{ padding: '10vw 5vw', backgroundColor: 'transparent' }}>
       <div style={{ marginBottom: '4rem' }}>
         <h2 className="text-title" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>
           <MaskedText>Projects</MaskedText>

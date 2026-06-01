@@ -25,11 +25,15 @@ const Navbar = () => {
         SD.
       </div>
 
-      <ul style={{ display: 'flex', gap: '3rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-        <li><Magnetic><a href="#work" style={{ display: 'inline-block', padding: '10px' }}>Work</a></Magnetic></li>
-        <li><Magnetic><a href="#about" style={{ display: 'inline-block', padding: '10px' }}>About</a></Magnetic></li>
-        <li><Magnetic><a href="#contact" style={{ display: 'inline-block', padding: '10px' }}>Contact</a></Magnetic></li>
-      </ul>
+      <div style={{ display: 'flex', gap: '3rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+        {['About', 'Projects', 'Contact'].map((item) => (
+          <Magnetic key={item}>
+            <a href={`#${item.toLowerCase()}`} style={{ display: 'inline-block', padding: '10px' }}>
+              {item}
+            </a>
+          </Magnetic>
+        ))}
+      </div>
     </motion.nav>
   );
 };

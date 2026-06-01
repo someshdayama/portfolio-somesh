@@ -6,6 +6,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import StarryBackground from './components/ui/StarryBackground';
+import ScrollProgress from './components/ui/ScrollProgress';
 
 function App() {
   useEffect(() => {
@@ -28,19 +29,37 @@ function App() {
 
     requestAnimationFrame(raf);
     
-    return () => lenis.destroy();
+    // Smooth scroll for anchor links
+    const handleAnchorClick = (e) => {
+      const target = e.target.closest('a');
+      if (target && target.getAttribute('href')?.startsWith('#')) {
+        e.preventDefault();
+        lenis.scrollTo(target.getAttribute('href'));
+      }
+    };
+    document.addEventListener('click', handleAnchorClick);
+    
+    return () => {
+      document.removeEventListener('click', handleAnchorClick);
+      lenis.destroy();
+    };
   }, []);
 
   return (
     <div className="app-container">
       <StarryBackground />
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
         <About />
         <Projects />
-        <Contact />
       </main>
+      <footer id="contact" style={{ position: 'relative', height: '100vh', clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}>
+        <div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%', height: '100vh' }}>
+          <Contact />
+        </div>
+      </footer>
     </div>
   );
 }
