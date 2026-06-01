@@ -1,101 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 
 const Navbar = () => {
-  const [activeSegment, setActiveSegment] = useState('home');
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      
-      const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'education'];
-      const current = sections.find(section => {
-        const el = document.getElementById(section);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          return rect.top <= 200 && rect.bottom >= 200;
-        }
-        return false;
-      });
-      if (current) setActiveSegment(current);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navItems = [
-    { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Lab' },
-    { id: 'experience', label: 'History' },
-  ];
-
   return (
-    <motion.nav
-      initial={{ y: -100, x: '-50%' }}
-      animate={{ y: 0, x: '-50%' }}
-      className="glass"
+    <motion.nav 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
       style={{
         position: 'fixed',
-        top: '2rem',
-        left: '50%',
-        zIndex: 1000,
-        padding: '0.5rem 1rem',
-        borderRadius: '100px',
+        top: 0,
+        left: 0,
+        width: '100%',
+        padding: '2rem 5vw',
         display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        border: scrolled ? '1px solid var(--accent-primary)' : '1px solid var(--glass-border)',
-        boxShadow: scrolled ? '0 10px 30px rgba(0,0,0,0.5)' : 'none',
-        transition: 'all 0.4s ease'
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        zIndex: 100,
+        mixBlendMode: 'difference'
       }}
     >
-      <Magnetic>
-        <a href="#hero" style={{ padding: '0.75rem 1.25rem', fontWeight: 900, fontSize: '1.2rem'}} className="accent-text">SD</a>
-      </Magnetic>
-      
-      <div style={{ display: 'flex', gap: '0.5rem', padding: '0 1rem' }}>
-        {navItems.map((item) => (
-          <Magnetic key={item.id}>
-            <a 
-              href={`#${item.id}`}
-              style={{
-                padding: '0.75rem 1.25rem',
-                fontSize: '0.9rem',
-                fontWeight: 600,
-                color: activeSegment === item.id ? 'white' : 'var(--text-secondary)',
-                position: 'relative',
-                display: 'block'
-              }}
-            >
-              {item.label}
-              {activeSegment === item.id && (
-                <motion.div
-                  layoutId="nav-bg"
-                  className="accent-primary"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    borderRadius: '50px',
-                    zIndex: -1,
-                    border: '1px solid rgba(59, 130, 246, 0.2)'
-                  }}
-                />
-              )}
-            </a>
-          </Magnetic>
-        ))}
+      <div style={{ fontWeight: 700, fontSize: '1.25rem', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+        Somesh <br />
+        <span className="font-serif" style={{ fontWeight: 400 }}>Dayama</span>
       </div>
 
-      <Magnetic>
-        <a href="#contact" className="btn btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.85rem' }}>
-          Connect
-        </a>
-      </Magnetic>
+      <ul style={{ display: 'flex', gap: '3rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+        <li><Magnetic><a href="#work" style={{ display: 'inline-block', padding: '10px' }}>Work</a></Magnetic></li>
+        <li><Magnetic><a href="#about" style={{ display: 'inline-block', padding: '10px' }}>About</a></Magnetic></li>
+        <li><Magnetic><a href="#contact" style={{ display: 'inline-block', padding: '10px' }}>Contact</a></Magnetic></li>
+      </ul>
     </motion.nav>
   );
 };
