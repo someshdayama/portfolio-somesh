@@ -104,20 +104,6 @@ section {
   color: var(--text-secondary);
 }
 
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Parallax Container */
-.parallax-wrapper {
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-}
-
 /* Grid overlay to give a film vibe occasionally */
 .grain-overlay {
   position: fixed;

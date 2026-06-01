@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
+import MaskedText from './ui/MaskedText';
 
 const Contact = () => {
   const ref = useRef(null);
@@ -15,7 +16,9 @@ const Contact = () => {
   return (
     <section ref={ref} id="contact" style={{ backgroundColor: 'transparent', overflow: 'hidden' }}>
       <motion.div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', scale, opacity }}>
-        <h2 className="text-title font-serif" style={{ marginBottom: '2rem', textTransform: 'none' }}>Let's Work Together</h2>
+        <h2 className="text-title font-serif" style={{ marginBottom: '2rem', textTransform: 'none' }}>
+          <MaskedText>Let's Work Together</MaskedText>
+        </h2>
         <Magnetic>
           <a href="mailto:someshdayama2@gmail.com" className="text-huge" style={{ display: 'inline-block', padding: '2rem' }}>
             Get In Touch

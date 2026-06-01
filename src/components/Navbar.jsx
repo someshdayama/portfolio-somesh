@@ -21,9 +21,8 @@ const Navbar = () => {
         mixBlendMode: 'difference'
       }}
     >
-      <div style={{ fontWeight: 700, fontSize: '1.25rem', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
-        Somesh <br />
-        <span className="font-serif" style={{ fontWeight: 400 }}>Dayama</span>
+      <div style={{ fontWeight: 700, fontSize: '1.5rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+        SD.
       </div>
 
       <ul style={{ display: 'flex', gap: '3rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>

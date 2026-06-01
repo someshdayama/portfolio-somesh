@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
+import MaskedText from './ui/MaskedText';
 import velocityImg from '../assets/velocity.png';
 import weatherImg from '../assets/weather.png';
 import resumeImg from '../assets/resume-builder.png';
@@ -32,23 +33,19 @@ const Projects = () => {
 
   return (
     <section id="work" style={{ padding: '10vw 5vw', backgroundColor: 'transparent' }}>
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8 }}
-        style={{ marginBottom: '4rem' }}
-      >
-         <h2 className="text-title" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>Selected Works</h2>
-      </motion.div>
+      <div style={{ marginBottom: '4rem' }}>
+        <h2 className="text-title" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>
+          <MaskedText>Projects</MaskedText>
+        </h2>
+      </div>
 
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-        gap: '3rem' 
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '3rem'
       }}>
         {projects.map((project, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -58,29 +55,29 @@ const Projects = () => {
           >
             {/* Image Container */}
             <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ width: '100%', aspectRatio: '4/3', overflow: 'hidden', backgroundColor: '#111', marginBottom: '1.5rem', display: 'block' }}>
-               <motion.img 
-                 whileHover={{ scale: 1.05 }}
-                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                 src={project.image} 
-                 alt={project.title} 
-                 style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} 
-               />
+              <motion.img
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                src={project.image}
+                alt={project.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }}
+              />
             </a>
-            
+
             {/* Content */}
             <div>
-               <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase' }}>{project.title}</h3>
-               <p className="font-serif" style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                 {project.description}
-               </p>
-               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--text-muted)', paddingTop: '1rem' }}>
-                 <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{project.year}</span>
-                 <Magnetic>
-                   <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.8rem', display: 'inline-block', padding: '10px' }}>
-                     View Project ↗
-                   </a>
-                 </Magnetic>
-               </div>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase' }}>{project.title}</h3>
+              <p className="font-serif" style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                {project.description}
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--text-muted)', paddingTop: '1rem' }}>
+                <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{project.year}</span>
+                <Magnetic>
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.8rem', display: 'inline-block', padding: '10px' }}>
+                    View Project ↗
+                  </a>
+                </Magnetic>
+              </div>
             </div>
           </motion.div>
         ))}

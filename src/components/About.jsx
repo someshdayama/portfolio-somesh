@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import MaskedText from './ui/MaskedText';
+import HoverImage from './ui/HoverImage';
+import velocityImg from '../assets/velocity.png';
+import weatherImg from '../assets/weather.png';
+import resumeImg from '../assets/resume-builder.png';
 
 const About = () => {
+  const [hoveredImage, setHoveredImage] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+
   const containerVars = {
     hidden: { opacity: 0 },
     show: {
@@ -15,16 +23,37 @@ const About = () => {
     show: { opacity: 1, y: 0, transition: { duration: 0.8 } }
   };
 
+  const skills = [
+    { name: "GCP", img: velocityImg },
+    { name: "AWS", img: weatherImg },
+    { name: "Azure", img: resumeImg },
+    { name: "Terraform", img: velocityImg },
+    { name: "Ansible", img: weatherImg },
+    { name: "Docker", img: resumeImg },
+    { name: "Kubernetes (GKE)", img: velocityImg },
+    { name: "Helm", img: weatherImg },
+    { name: "Jenkins", img: resumeImg },
+    { name: "GitHub Actions", img: velocityImg },
+    { name: "Python", img: weatherImg },
+    { name: "Java", img: resumeImg },
+    { name: "Prometheus", img: velocityImg },
+    { name: "Grafana", img: weatherImg }
+  ];
+
   return (
-    <section id="about" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '10vw' }}>
+    <section id="about" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '10vw', position: 'relative' }}>
+      <HoverImage src={hoveredImage} isActive={isHovered} />
+      
       <motion.div
         variants={containerVars}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-100px" }}
-        style={{ maxWidth: '900px' }}
+        style={{ maxWidth: '900px', width: '100%' }}
       >
-        <motion.h2 variants={itemVars} className="text-title" style={{ marginBottom: '3rem' }}>Profile</motion.h2>
+        <h2 className="text-title" style={{ marginBottom: '3rem' }}>
+          <MaskedText>Profile</MaskedText>
+        </h2>
         
         <motion.p variants={itemVars} className="text-body font-serif" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', lineHeight: 1.6, color: 'var(--text-primary)', marginBottom: '4rem', maxWidth: '100%' }}>
           Results-driven Software Engineer with over 3 years of experience specializing in cloud infrastructure, high-performance CI/CD automation, and site reliability engineering. Adept at optimizing system architecture across GCP, Azure, and AWS to drive down cloud expenditures and maximize deployment frequencies. Leverages automated tooling and agile practices as a force multiplier to streamline complex release management, eliminate technical debt, and ensure zero-drift infrastructure stability.
@@ -85,9 +114,19 @@ const About = () => {
         
         {/* Skills/Tools Section */}
         <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}>Expertise & Tools</h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
-          {["GCP", "AWS", "Azure", "Terraform", "Ansible", "Docker", "Kubernetes (GKE)", "Helm", "Jenkins", "GitHub Actions", "Python", "Java", "Prometheus", "Grafana"].map(skill => (
-            <span key={skill} style={{ border: '1px solid var(--text-muted)', padding: '0.5rem 1rem', borderRadius: '50px', fontSize: '0.9rem' }}>{skill}</span>
+        <div 
+          style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {skills.map(skill => (
+            <motion.span 
+              key={skill.name} 
+              onMouseEnter={() => { setHoveredImage(skill.img); setIsHovered(true); }}
+              whileHover={{ color: '#fff', borderColor: '#fff' }}
+              style={{ border: '1px solid var(--text-muted)', padding: '0.5rem 1rem', borderRadius: '50px', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease' }}
+            >
+              {skill.name}
+            </motion.span>
           ))}
         </div>
       </motion.div>
