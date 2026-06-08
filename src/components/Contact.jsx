@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 import MaskedText from './ui/MaskedText';
 
+import { PROFILE } from '../data/profile';
+
 const Contact = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -20,15 +22,16 @@ const Contact = () => {
           <MaskedText>Let's Work Together</MaskedText>
         </h2>
         <Magnetic>
-          <a href="mailto:someshdayama2@gmail.com" className="text-huge" style={{ display: 'inline-block', padding: '2rem' }}>
+          <a href={`mailto:${PROFILE.contact.email}`} className="text-huge" style={{ display: 'inline-block', padding: '2rem' }}>
             Get In Touch
           </a>
         </Magnetic>
         
         <div style={{ marginTop: '4rem', display: 'flex', gap: '4rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          <a href="https://www.linkedin.com/in/somesh-dayama/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-          <a href="https://github.com/someshdayama" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-          <a href="tel:+917049614849">Phone ↗</a>
+          {PROFILE.contact.socials.map((social, i) => (
+            <a key={i} href={social.url} target="_blank" rel="noopener noreferrer">{social.name} ↗</a>
+          ))}
+          <a href={`tel:${PROFILE.contact.phone}`}>Phone ↗</a>
         </div>
         
         <div style={{ position: 'absolute', bottom: '2rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>

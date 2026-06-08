@@ -68,17 +68,22 @@ const About = () => {
 
         {/* Skills/Tools Section */}
         <h3 style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}>Expertise & Tools</h3>
-        <div
-          style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}
-        >
-          {about.skills.map(skill => (
-            <motion.span
-              key={skill.name}
-              whileHover={{ color: '#fff', borderColor: '#fff' }}
-              style={{ border: '1px solid var(--text-muted)', padding: '0.5rem 1rem', borderRadius: '50px', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease' }}
-            >
-              {skill.name}
-            </motion.span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          {about.skills.map((skillGroup, i) => (
+            <div key={i}>
+              <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--text-secondary)' }}>{skillGroup.category}</h4>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
+                {skillGroup.items.map(skill => (
+                  <motion.span
+                    key={skill}
+                    whileHover={{ color: '#fff', borderColor: '#fff' }}
+                    style={{ border: '1px solid var(--text-muted)', padding: '0.5rem 1rem', borderRadius: '50px', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease' }}
+                  >
+                    {skill}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </motion.div>

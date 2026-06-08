@@ -43,16 +43,28 @@ const Projects = () => {
             {/* Content */}
             <div>
               <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase' }}>{project.title}</h3>
-              <p className="font-serif" style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+              <p className="font-serif" style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '1rem' }}>
                 {project.description}
               </p>
+              <div style={{ marginBottom: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {project.techStack.map(tech => (
+                  <span key={tech} style={{ fontSize: '0.8rem', padding: '0.2rem 0.6rem', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '20px', color: 'var(--text-secondary)' }}>{tech}</span>
+                ))}
+              </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--text-muted)', paddingTop: '1rem' }}>
                 <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{project.year}</span>
-                <Magnetic>
-                  <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.8rem', display: 'inline-block', padding: '10px' }}>
-                    View Project ↗
-                  </a>
-                </Magnetic>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Magnetic>
+                    <a href={project.repo} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.8rem', display: 'inline-block', padding: '10px', color: 'var(--text-secondary)' }}>
+                      GitHub ↗
+                    </a>
+                  </Magnetic>
+                  <Magnetic>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.8rem', display: 'inline-block', padding: '10px' }}>
+                      Live ↗
+                    </a>
+                  </Magnetic>
+                </div>
               </div>
             </div>
           </motion.div>
