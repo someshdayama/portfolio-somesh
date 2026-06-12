@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 import MaskedText from './ui/MaskedText';
@@ -7,6 +7,8 @@ import { PROFILE } from '../data/profile';
 
 const Contact = () => {
   const ref = useRef(null);
+  const [copied, setCopied] = useState(false);
+  
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end end"]
@@ -14,6 +16,12 @@ const Contact = () => {
 
   const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1]);
   const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(PROFILE.contact.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <section ref={ref} id="contact" style={{ backgroundColor: 'transparent', overflow: 'hidden' }}>
@@ -26,6 +34,23 @@ const Contact = () => {
             Get In Touch
           </a>
         </Magnetic>
+
+        <div 
+          onClick={handleCopy} 
+          style={{ 
+            marginTop: '1rem', 
+            cursor: 'pointer', 
+            fontSize: '1.1rem', 
+            color: copied ? 'var(--text-primary)' : 'var(--text-secondary)',
+            fontWeight: 500,
+            letterSpacing: '0.05em',
+            transition: 'color 0.3s ease'
+          }}
+          onMouseEnter={(e) => { if (!copied) e.target.style.color = '#fff'; }}
+          onMouseLeave={(e) => { if (!copied) e.target.style.color = 'var(--text-secondary)'; }}
+        >
+          {copied ? '✓ Email Copied to Clipboard!' : PROFILE.contact.email}
+        </div>
         
         <div style={{ marginTop: '4rem', display: 'flex', gap: '4rem', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
           {PROFILE.contact.socials.map((social, i) => (

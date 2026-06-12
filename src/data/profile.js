@@ -4,21 +4,21 @@ import resumeImg from '../assets/resume-builder.png';
 
 export const PROFILE = {
   hero: {
-    summary: "Software engineer integrating cloud infrastructure, core development, and networking with AI as his sidekick."
+    summary: "Friendly neighbourhood Software Engineer building cloud infrastructure, automated pipelines, and custom AI agents."
   },
   about: {
-    summary: "Your friendly neighbourhood Software Engineer with over 3 years of experience specializing in cloud infrastructure, high-performance CI/CD automation, and site reliability engineering. Adept at optimizing system architecture across GCP, Azure, and AWS to drive down cloud expenditures and maximize deployment frequencies. Leverages automated tooling and agile practices as a force multiplier to streamline complex release management, eliminate technical debt, and ensure zero-drift infrastructure stability.",
+    summary: "With over 3 years of experience in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I take care of the AMPS product as the Release Train Engineer (RTE), representing the product at the management level, aligning release cycles and mitigating risks. Recently I've also been building custom AI agents to automate development workflows.",
     experience: [
       {
         company: "NCR Atleos Corporation",
         position: "Software Engineer",
         period: "Feb 2025 - Present",
         responsibilities: [
-          "Facilitated agile ceremonies and cleared blockers for an 18-member engineering squad, driving sprint predictability and process optimization as Scrum Master.",
-          "Managed release lifecycles and cross-functional CI/CD coordination for the AMP Services Product on Azure, aligning delivery timelines and mitigating operational risks as Release Train Engineer (RTE).",
-          "Functioned as primary Incident Commander for mission-critical production outages, architecting coordination strategies between Dev and Ops teams to significantly reduce Mean Time to Resolution.",
-          "Spearheaded infrastructure provisioning and environment setup using GCP (GKE, Compute Engine), utilizing Jenkins, Helm, and Ansible to maintain high availability and deployment velocity.",
-          "Conducted self-initiated legacy upgrades and continuous drift detection, successfully maintaining zero configuration drift across multi-cloud environments."
+          "Manage release lifecycles and cross-functional CI/CD coordination on Azure as the Release Train Engineer (RTE).",
+          "Serve as Scrum Master for an 18-member squad, facilitating ceremonies and clearing blockers to boost velocity.",
+          "Writing and implementing CI/CD pipelines using Azure DevOps and Jenkins, also migrating Jenkins to Github Workflows.",
+          "Provisioned and scaled Azure infrastructure (AKS, VM's) using Helm, Ansible, and Jenkins.",
+          "Automating the process of initial development phase by implementing AI agents."
         ]
       },
       {
@@ -26,9 +26,9 @@ export const PROFILE = {
         position: "Software Engineer",
         period: "May 2023 - Feb 2025",
         responsibilities: [
-          "Developed automated scripts and engineered resource allocation strategies on GCP, delivering a 34.56% reduction in cloud infrastructure costs via precision instance rightsizing and auto-scaling.",
-          "Architected automated database maintenance blueprints and failover strategies utilizing Terraform and Ansible, decreasing database-related production incidents by 24%.",
-          "Orchestrated environment deployment for the Authentic Switch application across production and staging GCP environments using Terraform, establishing fully reproducible, scalable infrastructure."
+          "Cut GCP infrastructure costs by 34.56% through precision instance rightsizing and auto-scaling scripts.",
+          "Designed automated database maintenance and failover strategies using Terraform and Ansible, reducing incidents by 24%.",
+          "Provisioned reproducible staging and production GCP environments for the Authentic Switch application using Terraform."
         ]
       },
       {
@@ -36,8 +36,8 @@ export const PROFILE = {
         position: "Trainee Software Engineer",
         period: "Jan 2023 - Apr 2023",
         responsibilities: [
-          "Automated Jenkins-based deployment pipelines for the flagship Domino’s App (Jubilant Foods), radically minimizing manual interventions and reducing deployment cycle times.",
-          "Managed Linux virtual environments and leveraged AWS core services to dynamically provision scalable staging environments for cross-functional development teams."
+          "Automated Jenkins pipelines for the Domino's App (Jubilant Foods) to cut down cycle times and manual efforts.",
+          "Provisioned dynamic staging environments using AWS core services and managed Linux virtual environments."
         ]
       }
     ],
