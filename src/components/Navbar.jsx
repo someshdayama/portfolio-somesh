@@ -13,7 +13,7 @@ const Navbar = () => {
         top: 0,
         left: 0,
         width: '100%',
-        padding: '2rem 5vw',
+        padding: '2rem 8vw',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'flex-start',

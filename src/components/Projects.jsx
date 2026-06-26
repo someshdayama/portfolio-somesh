@@ -1,14 +1,143 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 import MaskedText from './ui/MaskedText';
 import { PROFILE } from '../data/profile';
+
+const ProjectCard = ({ project, i }) => {
+  const ref = useRef(null);
+
+  // Mouse positions relative to the card container
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Smooth spring animations for rotation
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [12, -12]), { damping: 25, stiffness: 180 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-12, 12]), { damping: 25, stiffness: 180 });
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left - width / 2;
+    const mouseY = e.clientY - rect.top - height / 2;
+    
+    // Normalize between -0.5 and 0.5
+    x.set(mouseX / width);
+    y.set(mouseY / height);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        perspective: 1200,
+        transformStyle: "preserve-3d",
+      }}
+      // Scroll reveal trigger
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <motion.div
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: "preserve-3d",
+          display: 'flex', 
+          flexDirection: 'column',
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(255, 255, 255, 0.02)',
+          border: '1px solid rgba(255, 255, 255, 0.05)',
+          borderRadius: '16px',
+          padding: '1.75rem',
+          boxShadow: '0 15px 35px rgba(0, 0, 0, 0.6)',
+          transition: 'border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease',
+        }}
+        whileHover={{
+          borderColor: 'rgba(255, 255, 255, 0.12)',
+          backgroundColor: 'rgba(255, 255, 255, 0.04)',
+          boxShadow: '0 20px 45px rgba(0, 0, 0, 0.8)',
+        }}
+      >
+        {/* Image Container with 3D Pop */}
+        <a 
+          href={project.link} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          style={{ 
+            width: '100%', 
+            aspectRatio: '1.45/1', 
+            overflow: 'hidden', 
+            backgroundColor: '#111', 
+            marginBottom: '1.5rem', 
+            display: 'block',
+            borderRadius: '10px',
+            transform: 'translateZ(30px)', // pop out image in 3D
+            boxShadow: '0 8px 20px rgba(0, 0, 0, 0.4)',
+          }}
+        >
+          <motion.img
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            src={project.image}
+            alt={project.title}
+            loading="lazy"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+          />
+        </a>
+
+        {/* Content with 3D Pop */}
+        <div style={{ transform: 'translateZ(15px)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{project.title}</h3>
+          <p className="font-serif" style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '1.5rem', flexGrow: 1, minHeight: '60px' }}>
+            {project.description}
+          </p>
+          
+          {/* Tech Stack */}
+          <div style={{ marginBottom: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+            {project.techStack.map(tech => (
+              <span key={tech} style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '20px', color: 'var(--text-secondary)', border: '1px solid rgba(255,255,255,0.03)' }}>{tech}</span>
+            ))}
+          </div>
+          
+          {/* Footer Info & Links */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '1rem', marginTop: 'auto' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{project.year}</span>
+            <div style={{ display: 'flex', gap: '0.25rem' }}>
+              <Magnetic>
+                <a href={project.repo} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.75rem', display: 'inline-block', padding: '8px 12px', color: 'var(--text-secondary)' }}>
+                  GitHub ↗
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.75rem', display: 'inline-block', padding: '8px 12px' }}>
+                  Live ↗
+                </a>
+              </Magnetic>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
 
 const Projects = () => {
   const projects = PROFILE.projects;
 
   return (
-    <section id="projects" style={{ padding: '10vw 5vw', backgroundColor: 'transparent' }}>
+    <section id="projects" style={{ padding: '2vw 8vw 10vw 8vw', backgroundColor: 'transparent' }}>
       <div style={{ marginBottom: '4rem' }}>
         <h2 className="text-title" style={{ fontSize: 'clamp(2rem, 4vw, 4rem)' }}>
           <MaskedText>Projects</MaskedText>
@@ -17,57 +146,11 @@ const Projects = () => {
 
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '3rem'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gap: '3.5rem'
       }}>
         {projects.map((project, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: i * 0.2 }}
-            style={{ display: 'flex', flexDirection: 'column' }}
-          >
-            {/* Image Container */}
-            <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ width: '100%', aspectRatio: '4/3', overflow: 'hidden', backgroundColor: '#111', marginBottom: '1.5rem', display: 'block' }}>
-              <motion.img
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                src={project.image}
-                alt={project.title}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }}
-              />
-            </a>
-
-            {/* Content */}
-            <div>
-              <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase' }}>{project.title}</h3>
-              <p className="font-serif" style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '1rem' }}>
-                {project.description}
-              </p>
-              <div style={{ marginBottom: '1.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                {project.techStack.map(tech => (
-                  <span key={tech} style={{ fontSize: '0.8rem', padding: '0.2rem 0.6rem', backgroundColor: 'rgba(255, 255, 255, 0.05)', borderRadius: '20px', color: 'var(--text-secondary)' }}>{tech}</span>
-                ))}
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--text-muted)', paddingTop: '1rem' }}>
-                <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>{project.year}</span>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <Magnetic>
-                    <a href={project.repo} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.8rem', display: 'inline-block', padding: '10px', color: 'var(--text-secondary)' }}>
-                      GitHub ↗
-                    </a>
-                  </Magnetic>
-                  <Magnetic>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.8rem', display: 'inline-block', padding: '10px' }}>
-                      Live ↗
-                    </a>
-                  </Magnetic>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <ProjectCard key={i} project={project} i={i} />
         ))}
       </div>
     </section>
@@ -75,3 +158,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

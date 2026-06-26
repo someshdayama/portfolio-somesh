@@ -81,22 +81,21 @@ const StarryBackground = () => {
         const s = Math.max(star.size * k, 0.1);
 
         if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
-          ctx.beginPath();
-          
           if (Math.abs(currentSpeed) > 3) {
              const prevK = 128.0 / (star.z + currentSpeed * 2);
              const prevPx = star.x * prevK + centerX;
              const prevPy = star.y * prevK + centerY;
              
+             ctx.beginPath();
              ctx.strokeStyle = `rgba(255, 255, 255, ${star.o})`;
              ctx.lineWidth = s;
              ctx.moveTo(prevPx, prevPy);
              ctx.lineTo(px, py);
              ctx.stroke();
           } else {
+             // Highly performant rectangular rendering for tiny stars instead of heavy vector path arc circles
              ctx.fillStyle = `rgba(255, 255, 255, ${star.o})`;
-             ctx.arc(px, py, s, 0, Math.PI * 2);
-             ctx.fill();
+             ctx.fillRect(px - s / 2, py - s / 2, s, s);
           }
         }
       }

@@ -22,12 +22,13 @@ function App() {
       infinite: false,
     });
 
+    let rafId;
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
     
     // Smooth scroll for anchor links
     const handleAnchorClick = (e) => {
@@ -41,12 +42,14 @@ function App() {
     
     return () => {
       document.removeEventListener('click', handleAnchorClick);
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
   }, []);
 
   return (
     <div className="app-container">
+      <div className="grain-overlay" />
       <StarryBackground />
       <ScrollProgress />
       <Navbar />
@@ -55,8 +58,27 @@ function App() {
         <About />
         <Projects />
       </main>
-      <footer id="contact" style={{ position: 'relative', height: '100vh', clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' }}>
-        <div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%', height: '100vh' }}>
+      <footer 
+        id="contact" 
+        style={{ 
+          position: 'relative', 
+          height: '100vh', 
+          clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)',
+          transform: 'translateZ(0)',
+          willChange: 'clip-path'
+        }}
+      >
+        <div 
+          style={{ 
+            position: 'fixed', 
+            bottom: 0, 
+            left: 0, 
+            width: '100%', 
+            height: '100vh',
+            transform: 'translate3d(0, 0, 0)',
+            willChange: 'transform'
+          }}
+        >
           <Contact />
         </div>
       </footer>

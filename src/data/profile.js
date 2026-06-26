@@ -1,6 +1,6 @@
-import velocityImg from '../assets/velocity.png';
-import weatherImg from '../assets/weather.png';
-import resumeImg from '../assets/resume-builder.png';
+import velocityImg from '../assets/velocity.webp';
+import weatherImg from '../assets/weather.webp';
+import resumeImg from '../assets/resume-builder.webp';
 
 export const PROFILE = {
   hero: {
