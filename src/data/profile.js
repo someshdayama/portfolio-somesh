@@ -1,6 +1,7 @@
 import velocityImg from '../assets/velocity.webp';
 import weatherImg from '../assets/weather.webp';
 import resumeImg from '../assets/resume-builder.webp';
+import radarImg from '../assets/career-radar.webp';
 
 export const PROFILE = {
   hero: {
@@ -80,22 +81,20 @@ export const PROFILE = {
   },
   projects: [
     {
+      title: "Career Radar",
+      description: "Real-time job search and aggregation streaming dashboard scanning listings from top tech firms using Server-Sent Events (SSE).",
+      link: "https://career-radar-smoky.vercel.app/",
+      repo: "https://github.com/someshdayama/career-radar",
+      techStack: ["Next.js", "React", "Server-Sent Events", "TailwindCSS"],
+      image: radarImg
+    },
+    {
       title: "Velocity",
       description: "Network Speed Testing Application designed to measure download, upload, and latency with high precision.",
       link: "https://velocity-speedtest.netlify.app/",
       repo: "https://github.com/someshdayama/velocity",
       techStack: ["React", "Vite", "JavaScript", "CSS"],
-      image: velocityImg,
-      year: "2024"
-    },
-    {
-      title: "Ambient Weather",
-      description: "Real-time atmospheric data app providing beautifully designed weather forecasts and environmental conditions.",
-      link: "https://ambientweather.netlify.app/",
-      repo: "https://github.com/someshdayama/ambient-weather",
-      techStack: ["React", "Vite", "OpenWeather API"],
-      image: weatherImg,
-      year: "2023"
+      image: velocityImg
     },
     {
       title: "Promptly",
@@ -103,8 +102,15 @@ export const PROFILE = {
       link: "https://resumebuilder-promptly.vercel.app/",
       repo: "https://github.com/someshdayama/promptly",
       techStack: ["Next.js", "TailwindCSS", "OpenAI API"],
-      image: resumeImg,
-      year: "2024"
+      image: resumeImg
+    },
+    {
+      title: "Ambient Weather",
+      description: "Real-time atmospheric data app providing beautifully designed weather forecasts and environmental conditions.",
+      link: "https://ambientweather.netlify.app/",
+      repo: "https://github.com/someshdayama/ambient-weather",
+      techStack: ["React", "Vite", "OpenWeather API"],
+      image: weatherImg
     }
   ],
   contact: {
