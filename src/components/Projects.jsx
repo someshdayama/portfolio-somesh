@@ -11,26 +11,42 @@ const ProjectCard = ({ project, i }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
+  // Sheen coordinates
+  const sheenX = useMotionValue(-1000);
+  const sheenY = useMotionValue(-1000);
+
   // Smooth spring animations for rotation
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [12, -12]), { damping: 25, stiffness: 180 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-12, 12]), { damping: 25, stiffness: 180 });
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [18, -18]), { damping: 20, stiffness: 180 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-18, 18]), { damping: 20, stiffness: 180 });
+
+  // Sheen gradient background mapping
+  const sheenBg = useTransform(
+    [sheenX, sheenY],
+    ([lx, ly]) => `radial-gradient(circle 220px at ${lx}px ${ly}px, rgba(255, 255, 255, 0.08), transparent 80%)`
+  );
 
   const handleMouseMove = (e) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
     
+    // Set sheen coordinates
+    sheenX.set(mouseX);
+    sheenY.set(mouseY);
+
     // Normalize between -0.5 and 0.5
-    x.set(mouseX / width);
-    y.set(mouseY / height);
+    x.set((mouseX - width / 2) / width);
+    y.set((mouseY - height / 2) / height);
   };
 
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+    sheenX.set(-1000);
+    sheenY.set(-1000);
   };
 
   return (
@@ -39,11 +55,11 @@ const ProjectCard = ({ project, i }) => {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        perspective: 1200,
+        perspective: 1500,
         transformStyle: "preserve-3d",
       }}
       // Scroll reveal trigger
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.8, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
@@ -61,15 +77,33 @@ const ProjectCard = ({ project, i }) => {
           border: '1px solid rgba(255, 255, 255, 0.05)',
           borderRadius: '16px',
           padding: '1.75rem',
+          position: 'relative',
+          overflow: 'hidden',
           boxShadow: '0 15px 35px rgba(0, 0, 0, 0.6)',
           transition: 'border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease',
         }}
         whileHover={{
-          borderColor: 'rgba(255, 255, 255, 0.12)',
-          backgroundColor: 'rgba(255, 255, 255, 0.04)',
-          boxShadow: '0 20px 45px rgba(0, 0, 0, 0.8)',
+          scale: 1.02,
+          borderColor: 'rgba(255, 255, 255, 0.15)',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          boxShadow: '0 25px 50px rgba(0, 0, 0, 0.8)',
         }}
       >
+        {/* Sheen Overlay reflection */}
+        <motion.div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: sheenBg,
+            pointerEvents: 'none',
+            borderRadius: '16px',
+            zIndex: 1,
+          }}
+        />
+
         {/* Image Container with 3D Pop */}
         <a 
           href={project.link} 
@@ -83,8 +117,10 @@ const ProjectCard = ({ project, i }) => {
             marginBottom: '1.5rem', 
             display: 'block',
             borderRadius: '10px',
-            transform: 'translateZ(30px)', // pop out image in 3D
-            boxShadow: '0 8px 20px rgba(0, 0, 0, 0.4)',
+            transform: 'translateZ(40px)', // popped further out in 3D
+            boxShadow: '0 8px 25px rgba(0, 0, 0, 0.5)',
+            position: 'relative',
+            zIndex: 2
           }}
         >
           <motion.img
@@ -98,7 +134,7 @@ const ProjectCard = ({ project, i }) => {
         </a>
 
         {/* Content with 3D Pop */}
-        <div style={{ transform: 'translateZ(15px)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <div style={{ transform: 'translateZ(20px)', display: 'flex', flexDirection: 'column', height: '100%', position: 'relative', zIndex: 2 }}>
           <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{project.title}</h3>
           <p className="font-serif" style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '1.5rem', flexGrow: 1, minHeight: '60px' }}>
             {project.description}

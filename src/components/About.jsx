@@ -4,19 +4,8 @@ import MaskedText from './ui/MaskedText';
 import { PROFILE } from '../data/profile';
 
 const About = () => {
-  const containerVars = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      }
-    }
-  };
-
   const itemVars = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40 },
     show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
   };
 
@@ -24,13 +13,13 @@ const About = () => {
     hidden: {},
     show: {
       transition: {
-        staggerChildren: 0.05
+        staggerChildren: 0.04
       }
     }
   };
 
   const skillTagVars = {
-    hidden: { opacity: 0, scale: 0.85, y: 10 },
+    hidden: { opacity: 0, scale: 0.85, y: 12 },
     show: { 
       opacity: 1, 
       scale: 1, 
@@ -43,23 +32,27 @@ const About = () => {
 
   return (
     <section id="about" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '10vw 8vw 2vw 8vw', position: 'relative' }}>
-      <motion.div
-        variants={containerVars}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
-        style={{ maxWidth: '900px', width: '100%' }}
-      >
+      <div style={{ maxWidth: '900px', width: '100%' }}>
         <h2 className="text-title font-serif" style={{ marginBottom: '3rem' }}>
           <MaskedText>Profile</MaskedText>
         </h2>
 
-        <motion.p variants={itemVars} className="text-body" style={{ fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', lineHeight: 1.6, color: 'var(--text-primary)', marginBottom: '4rem', maxWidth: '100%' }}>
+        <motion.p 
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={itemVars}
+          className="text-body" 
+          style={{ fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', lineHeight: 1.6, color: 'var(--text-primary)', marginBottom: '4rem', maxWidth: '100%' }}
+        >
           {about.summary}
         </motion.p>
 
         {/* Experience Section */}
         <motion.h3 
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
           style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}
         >
@@ -70,6 +63,9 @@ const About = () => {
           {about.experience.map((exp, i) => (
             <motion.div 
               key={i} 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
               variants={itemVars}
               style={{ position: 'relative' }}
             >
@@ -88,6 +84,9 @@ const About = () => {
 
         {/* Education Section */}
         <motion.h3 
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
           style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}
         >
@@ -96,7 +95,13 @@ const About = () => {
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginBottom: '4rem' }}>
           {about.education.map((edu, i) => (
-            <motion.div key={i} variants={itemVars}>
+            <motion.div 
+              key={i} 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={itemVars}
+            >
               <h4 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{edu.degree}</h4>
               <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem' }}>{edu.institution}</div>
             </motion.div>
@@ -105,6 +110,9 @@ const About = () => {
 
         {/* Skills/Tools Section */}
         <motion.h3 
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
           style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}
         >
@@ -113,7 +121,13 @@ const About = () => {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
           {about.skills.map((skillGroup, i) => (
-            <motion.div key={i} variants={itemVars}>
+            <motion.div 
+              key={i} 
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={itemVars}
+            >
               <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--text-secondary)' }}>{skillGroup.category}</h4>
               <motion.div 
                 variants={skillsContainerVars}
@@ -145,7 +159,7 @@ const About = () => {
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
