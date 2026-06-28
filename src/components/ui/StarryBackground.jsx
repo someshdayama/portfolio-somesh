@@ -3,7 +3,7 @@ import { useScroll, useVelocity, useSpring } from 'framer-motion';
 
 const StarryBackground = () => {
   const canvasRef = useRef(null);
-  
+
   // Use Framer Motion to get flawlessly smooth scroll velocity
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);
@@ -15,12 +15,12 @@ const StarryBackground = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    
+
     let animationFrameId;
     let stars = [];
-    
+
     const baseSpeed = 0.5;
-    const maxZ = 2500; 
+    const maxZ = 2000;
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -30,13 +30,13 @@ const StarryBackground = () => {
 
     const initStars = () => {
       stars = [];
-      const numStars = Math.floor((canvas.width * canvas.height) / 3000); 
+      const numStars = Math.floor((canvas.width * canvas.height) / 3000);
       for (let i = 0; i < numStars; i++) {
         stars.push({
           x: (Math.random() - 0.5) * canvas.width * 2,
           y: (Math.random() - 0.5) * canvas.height * 2,
           z: Math.random() * maxZ,
-          o: Math.random() * 0.8 + 0.2, 
+          o: Math.random() * 0.8 + 0.2,
           size: Math.random() * 1.5 + 0.5
         });
       }
@@ -52,6 +52,7 @@ const StarryBackground = () => {
       const cappedVelocity = Math.max(-5000, Math.min(5000, velocity));
       const currentSpeed = baseSpeed + (cappedVelocity * 0.005);
 
+      // Semi-transparent overlay to clear frames and allow trail blending
       ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -60,15 +61,15 @@ const StarryBackground = () => {
 
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
-        
+
         star.z -= currentSpeed;
-        
+
         if (star.z <= 0) {
           star.z = maxZ;
           star.x = (Math.random() - 0.5) * canvas.width * 2;
           star.y = (Math.random() - 0.5) * canvas.height * 2;
         }
-        
+
         if (star.z > maxZ) {
           star.z = 0.1;
           star.x = (Math.random() - 0.5) * canvas.width * 2;
@@ -78,24 +79,29 @@ const StarryBackground = () => {
         const k = 128.0 / star.z;
         const px = star.x * k + centerX;
         const py = star.y * k + centerY;
-        const s = Math.max(star.size * k, 0.1);
+        const s = Math.max(star.size * k, 0.7);
 
         if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
-          if (Math.abs(currentSpeed) > 3) {
-             const prevK = 128.0 / (star.z + currentSpeed * 2);
-             const prevPx = star.x * prevK + centerX;
-             const prevPy = star.y * prevK + centerY;
-             
-             ctx.beginPath();
-             ctx.strokeStyle = `rgba(255, 255, 255, ${star.o})`;
-             ctx.lineWidth = s;
-             ctx.moveTo(prevPx, prevPy);
-             ctx.lineTo(px, py);
-             ctx.stroke();
-          } else {
-             // Highly performant rectangular rendering for tiny stars instead of heavy vector path arc circles
-             ctx.fillStyle = `rgba(255, 255, 255, ${star.o})`;
-             ctx.fillRect(px - s / 2, py - s / 2, s, s);
+          // Fade out stars when they are far away (large Z) to prevent center clustering
+          const distanceFade = Math.max(0, Math.min(1, 1 - (star.z / maxZ)));
+          const opacity = star.o * Math.pow(distanceFade, 1.8);
+
+          if (opacity > 0.02) {
+            if (Math.abs(currentSpeed) > 3) {
+              const prevK = 128.0 / (star.z + currentSpeed * 2);
+              const prevPx = star.x * prevK + centerX;
+              const prevPy = star.y * prevK + centerY;
+
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+              ctx.lineWidth = s;
+              ctx.moveTo(prevPx, prevPy);
+              ctx.lineTo(px, py);
+              ctx.stroke();
+            } else {
+              ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+              ctx.fillRect(px - s / 2, py - s / 2, s, s);
+            }
           }
         }
       }
@@ -112,16 +118,16 @@ const StarryBackground = () => {
   }, [smoothVelocity]);
 
   return (
-    <canvas 
-      ref={canvasRef} 
+    <canvas
+      ref={canvasRef}
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: -1, 
-        pointerEvents: 'none', 
+        zIndex: -1,
+        pointerEvents: 'none',
         backgroundColor: '#000000'
       }}
     />
