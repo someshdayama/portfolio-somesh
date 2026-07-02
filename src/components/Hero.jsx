@@ -52,8 +52,8 @@ const Hero = () => {
         style={{ y, opacity, textAlign: 'center', zIndex: 10 }}
       >
         <h1 className="text-huge">
-          <MaskedText delay={0.0}>Somesh</MaskedText><br />
-          <MaskedText delay={0.12} className="font-serif">Dayama</MaskedText>
+          <MaskedText delay={0.0} useAnimate>Somesh</MaskedText><br />
+          <MaskedText delay={0.15} className="font-serif" useAnimate>Dayama</MaskedText>
         </h1>
 
         <motion.p

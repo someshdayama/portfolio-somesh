@@ -139,3 +139,16 @@ a:focus-visible {
   }
 }
 
+/* Available badge pulse */
+@keyframes availablePulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(52, 211, 153, 0); }
+}
+
+/* Skills bento grid — stack to 1 col on small screens */
+@media (max-width: 640px) {
+  #skills [style*="grid-template-columns: repeat(3, 1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
