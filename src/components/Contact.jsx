@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 import MaskedText from './ui/MaskedText';
 import { PROFILE } from '../data/profile';
@@ -13,13 +13,13 @@ const Contact = () => {
     offset: ["start end", "end end"]
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.88, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.2, 1]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(PROFILE.contact.email);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 2500);
   };
 
   const containerVars = {
@@ -38,64 +38,102 @@ const Contact = () => {
   };
 
   return (
-    <section ref={ref} id="contact" style={{ backgroundColor: 'transparent', overflow: 'hidden' }}>
+    <section ref={ref} id="contact" style={{ backgroundColor: 'transparent', overflow: 'hidden', padding: '4rem 4vw' }}>
       <motion.div 
         variants={containerVars}
         initial="hidden"
         whileInView="show"
         viewport={{ margin: "-50px" }}
         style={{ 
-          height: '100vh', 
+          minHeight: '85vh', 
           display: 'flex', 
           flexDirection: 'column', 
           alignItems: 'center', 
           justifyContent: 'center', 
           textAlign: 'center', 
           scale, 
-          opacity 
+          opacity,
+          position: 'relative'
         }}
       >
         <motion.h2 
           variants={itemVars}
           className="text-title font-serif" 
-          style={{ marginBottom: '2.5rem', textTransform: 'none' }}
+          style={{ marginBottom: '2rem', textTransform: 'none' }}
         >
           <MaskedText>Let's Work Together</MaskedText>
         </motion.h2>
 
         <motion.div variants={itemVars}>
           <Magnetic>
-            <a href={`mailto:${PROFILE.contact.email}`} className="text-huge" style={{ display: 'inline-block', padding: '1.5rem 3rem' }}>
+            <a 
+              href={`mailto:${PROFILE.contact.email}`} 
+              className="text-huge contact-email-cta" 
+              style={{ display: 'inline-block', padding: '1rem 2rem' }}
+            >
               Get In Touch
             </a>
           </Magnetic>
         </motion.div>
 
+        {/* Email button with copy to clipboard functionality */}
         <motion.div 
           variants={itemVars}
           onClick={handleCopy} 
           style={{ 
             marginTop: '1.5rem', 
             cursor: 'pointer', 
-            fontSize: '1.15rem', 
-            color: copied ? '#ffffff' : 'var(--text-secondary)',
+            fontSize: 'clamp(1rem, 1.5vw, 1.25rem)', 
+            color: copied ? '#34d399' : 'var(--text-secondary)',
             fontWeight: 500,
             letterSpacing: '0.05em',
-            transition: 'color 0.3s ease'
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            padding: '0.5rem 1.2rem',
+            borderRadius: '30px',
+            backgroundColor: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            transition: 'all 0.3s ease'
           }}
-          onMouseEnter={(e) => { if (!copied) e.target.style.color = '#ffffff'; }}
-          onMouseLeave={(e) => { if (!copied) e.target.style.color = 'var(--text-secondary)'; }}
         >
-          {copied ? '✓ Email Copied to Clipboard!' : PROFILE.contact.email}
+          <span>{PROFILE.contact.email}</span>
+          <span style={{ fontSize: '0.85rem', opacity: 0.8 }}>({copied ? '✓ Copied' : 'Click to Copy'})</span>
         </motion.div>
+
+        {/* Toast confirmation */}
+        <AnimatePresence>
+          {copied && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                marginTop: '1rem',
+                padding: '0.4rem 1rem',
+                borderRadius: '20px',
+                backgroundColor: '#34d399',
+                color: '#000000',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                letterSpacing: '0.05em',
+                boxShadow: '0 0 15px rgba(52, 211, 153, 0.4)'
+              }}
+            >
+              Email Copied to Clipboard!
+            </motion.div>
+          )}
+        </AnimatePresence>
         
+        {/* Socials & Recruiter links */}
         <motion.div 
           variants={itemVars}
           style={{ 
-            marginTop: '4rem', 
+            marginTop: '3.5rem', 
             display: 'flex', 
-            gap: '2rem', 
-            fontSize: '0.9rem', 
+            gap: '1.5rem', 
+            fontSize: '0.85rem', 
             textTransform: 'uppercase', 
             letterSpacing: '0.1em',
             flexWrap: 'wrap',
@@ -104,13 +142,13 @@ const Contact = () => {
         >
           {PROFILE.contact.socials.map((social, i) => (
             <Magnetic key={i}>
-              <a href={social.url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '10px' }}>
+              <a href={social.url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '8px 14px' }}>
                 {social.name} ↗
               </a>
             </Magnetic>
           ))}
           <Magnetic>
-            <a href={`tel:${PROFILE.contact.phone}`} style={{ display: 'inline-block', padding: '10px' }}>
+            <a href={`tel:${PROFILE.contact.phone}`} style={{ display: 'inline-block', padding: '8px 14px' }}>
               Phone ↗
             </a>
           </Magnetic>
@@ -118,7 +156,7 @@ const Contact = () => {
         
         <motion.div 
           variants={itemVars}
-          style={{ position: 'absolute', bottom: '2.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}
+          style={{ marginTop: '4rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}
         >
           © {new Date().getFullYear()} Somesh Dayama. All rights reserved.
         </motion.div>
@@ -128,4 +166,5 @@ const Contact = () => {
 };
 
 export default Contact;
+
 

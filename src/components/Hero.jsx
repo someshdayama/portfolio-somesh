@@ -40,16 +40,17 @@ const Hero = () => {
       ref={containerRef}
       id="hero"
       style={{
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        position: 'relative'
+        position: 'relative',
+        padding: '6rem 4vw 4rem 4vw'
       }}
     >
       <motion.div
-        style={{ y, opacity, textAlign: 'center', zIndex: 10 }}
+        style={{ y, opacity, textAlign: 'center', zIndex: 10, width: '100%', maxWidth: '900px' }}
       >
         <h1 className="text-huge">
           <MaskedText delay={0.0} useAnimate>Somesh</MaskedText><br />
@@ -62,13 +63,14 @@ const Hero = () => {
           animate="visible"
           className="text-body"
           style={{ 
-            margin: '3rem auto 0', 
-            fontSize: '1.2rem', 
-            maxWidth: '500px',
+            margin: '2.5rem auto 0', 
+            fontSize: 'clamp(1rem, 1.4vw, 1.25rem)', 
+            maxWidth: '560px',
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            gap: '0.3em'
+            gap: '0.3em',
+            lineHeight: 1.5
           }}
         >
           {words.map((word, i) => (
@@ -77,13 +79,14 @@ const Hero = () => {
             </motion.span>
           ))}
         </motion.p>
+
       </motion.div>
 
       {/* Scroll Indicator */}
       <motion.div
         style={{
           position: 'absolute',
-          bottom: '2.5rem',
+          bottom: '2rem',
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
@@ -95,9 +98,9 @@ const Hero = () => {
         }}
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
+        transition={{ delay: 1.1, duration: 0.6 }}
       >
-        <span style={{ fontSize: '0.7rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>Scroll</span>
+        <span style={{ fontSize: '0.65rem', letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>Scroll</span>
         <div style={{ 
           width: '20px', 
           height: '32px', 
@@ -130,3 +133,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

@@ -14,13 +14,32 @@ const StarryBackground = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
     let animationFrameId;
     let stars = [];
 
-    const baseSpeed = 0.5;
+    const baseSpeed = 0.6;
     const maxZ = 2000;
+
+    let targetMouseX = 0;
+    let targetMouseY = 0;
+    let currentMouseX = 0;
+    let currentMouseY = 0;
+
+    const handleMouseMove = (e) => {
+      targetMouseX = (e.clientX / window.innerWidth - 0.5) * 60;
+      targetMouseY = (e.clientY / window.innerHeight - 0.5) * 60;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    const colors = [
+      '255, 255, 255',   // Crisp White
+      '255, 255, 255',   // Crisp White
+      '255, 255, 255'    // Crisp White
+    ];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -30,14 +49,17 @@ const StarryBackground = () => {
 
     const initStars = () => {
       stars = [];
-      const numStars = Math.floor((canvas.width * canvas.height) / 3000);
+      const numStars = Math.floor((canvas.width * canvas.height) / 1800);
       for (let i = 0; i < numStars; i++) {
         stars.push({
-          x: (Math.random() - 0.5) * canvas.width * 2,
-          y: (Math.random() - 0.5) * canvas.height * 2,
+          x: (Math.random() - 0.5) * canvas.width * 2.2,
+          y: (Math.random() - 0.5) * canvas.height * 2.2,
           z: Math.random() * maxZ,
-          o: Math.random() * 0.8 + 0.2,
-          size: Math.random() * 1.5 + 0.5
+          o: Math.random() * 0.75 + 0.25,
+          size: Math.random() * 1.6 + 0.6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          twinklePhase: Math.random() * Math.PI * 2,
+          twinkleSpeed: 0.02 + Math.random() * 0.03
         });
       }
     };
@@ -46,34 +68,37 @@ const StarryBackground = () => {
     resize();
 
     const draw = () => {
-      // Calculate instantaneous speed based on smooth scroll velocity
-      const velocity = smoothVelocity.get();
-      // Cap the added velocity so it doesn't get insanely fast during flick scrolls
+      // Calculate instantaneous speed based on smooth scroll velocity safely
+      const rawVelocity = smoothVelocity.get();
+      const velocity = (typeof rawVelocity === 'number' && !isNaN(rawVelocity)) ? rawVelocity : 0;
       const cappedVelocity = Math.max(-5000, Math.min(5000, velocity));
       const currentSpeed = baseSpeed + (cappedVelocity * 0.005);
 
-      // Semi-transparent overlay to clear frames and allow trail blending
+      // Mouse parallax smooth interpolation
+      currentMouseX += (targetMouseX - currentMouseX) * 0.05;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.05;
+
+      // Pure black translucent clearing for smooth star trails
       ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
+      const centerX = canvas.width / 2 + currentMouseX;
+      const centerY = canvas.height / 2 + currentMouseY;
 
+      // Render Stars - strictly forward motion towards the viewer
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
 
-        star.z -= currentSpeed;
+        // Ensure currentSpeed is strictly positive so motion is always forward towards the screen
+        const forwardSpeed = Math.max(0.4, currentSpeed);
+        const prevZ = star.z;
+        star.z -= forwardSpeed;
+        star.twinklePhase += star.twinkleSpeed;
 
-        if (star.z <= 0) {
+        if (star.z <= 0.1) {
           star.z = maxZ;
-          star.x = (Math.random() - 0.5) * canvas.width * 2;
-          star.y = (Math.random() - 0.5) * canvas.height * 2;
-        }
-
-        if (star.z > maxZ) {
-          star.z = 0.1;
-          star.x = (Math.random() - 0.5) * canvas.width * 2;
-          star.y = (Math.random() - 0.5) * canvas.height * 2;
+          star.x = (Math.random() - 0.5) * canvas.width * 2.2;
+          star.y = (Math.random() - 0.5) * canvas.height * 2.2;
         }
 
         const k = 128.0 / star.z;
@@ -82,25 +107,28 @@ const StarryBackground = () => {
         const s = Math.max(star.size * k, 0.7);
 
         if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
-          // Fade out stars when they are far away (large Z) to prevent center clustering
           const distanceFade = Math.max(0, Math.min(1, 1 - (star.z / maxZ)));
-          const opacity = star.o * Math.pow(distanceFade, 1.8);
+          const twinkleFactor = 0.7 + 0.3 * Math.sin(star.twinklePhase);
+          const opacity = star.o * Math.pow(distanceFade, 1.5) * twinkleFactor;
 
           if (opacity > 0.02) {
-            if (Math.abs(currentSpeed) > 3) {
-              const prevK = 128.0 / (star.z + currentSpeed * 2);
+            // Draw speed trail when scrolling fast or when star is close to viewer
+            if (forwardSpeed > 1.5 || star.z < 500) {
+              const prevK = 128.0 / Math.min(maxZ, prevZ + forwardSpeed * 2.5);
               const prevPx = star.x * prevK + centerX;
               const prevPy = star.y * prevK + centerY;
 
               ctx.beginPath();
-              ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+              ctx.strokeStyle = `rgba(${star.color}, ${opacity})`;
               ctx.lineWidth = s;
               ctx.moveTo(prevPx, prevPy);
               ctx.lineTo(px, py);
               ctx.stroke();
             } else {
-              ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-              ctx.fillRect(px - s / 2, py - s / 2, s, s);
+              ctx.fillStyle = `rgba(${star.color}, ${opacity})`;
+              ctx.beginPath();
+              ctx.arc(px, py, s / 2, 0, Math.PI * 2);
+              ctx.fill();
             }
           }
         }
@@ -112,6 +140,7 @@ const StarryBackground = () => {
     draw();
 
     return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationFrameId);
     };
@@ -135,3 +164,4 @@ const StarryBackground = () => {
 };
 
 export default StarryBackground;
+

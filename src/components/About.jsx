@@ -5,7 +5,7 @@ import { PROFILE } from '../data/profile';
 
 const About = () => {
   const itemVars = {
-    hidden: { opacity: 0, y: 40 },
+    hidden: { opacity: 0, y: 35 },
     show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
   };
 
@@ -13,26 +13,26 @@ const About = () => {
     hidden: {},
     show: {
       transition: {
-        staggerChildren: 0.04
+        staggerChildren: 0.03
       }
     }
   };
 
   const skillTagVars = {
-    hidden: { opacity: 0, scale: 0.85, y: 12 },
+    hidden: { opacity: 0, scale: 0.85, y: 10 },
     show: { 
       opacity: 1, 
       scale: 1, 
       y: 0, 
-      transition: { type: 'spring', stiffness: 120, damping: 12 } 
+      transition: { type: 'spring', stiffness: 140, damping: 14 } 
     }
   };
 
   const { about } = PROFILE;
 
   return (
-    <section id="about" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: '10vw 8vw 2vw 8vw', position: 'relative' }}>
-      <div style={{ maxWidth: '900px', width: '100%' }}>
+    <section id="about" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '6rem 6vw 4rem 6vw', position: 'relative' }}>
+      <div style={{ maxWidth: '920px', width: '100%' }}>
         <h2 className="text-title font-serif" style={{ marginBottom: '3rem' }}>
           <MaskedText>Profile</MaskedText>
         </h2>
@@ -43,7 +43,7 @@ const About = () => {
           viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
           className="text-body" 
-          style={{ fontSize: 'clamp(1.2rem, 2vw, 1.6rem)', lineHeight: 1.6, color: 'var(--text-primary)', marginBottom: '4rem', maxWidth: '100%' }}
+          style={{ fontSize: 'clamp(1.15rem, 1.8vw, 1.55rem)', lineHeight: 1.6, color: 'var(--text-primary)', marginBottom: '4rem', maxWidth: '100%' }}
         >
           {about.summary}
         </motion.p>
@@ -54,12 +54,12 @@ const About = () => {
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
-          style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}
+          style={{ fontSize: '1.4rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', borderBottom: '1px solid rgba(255, 255, 255, 0.15)', paddingBottom: '0.8rem' }}
         >
           Experience
         </motion.h3>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', marginBottom: '4rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginBottom: '4rem' }}>
           {about.experience.map((exp, i) => (
             <motion.div 
               key={i} 
@@ -67,13 +67,22 @@ const About = () => {
               whileInView="show"
               viewport={{ once: true, margin: "-60px" }}
               variants={itemVars}
-              style={{ position: 'relative' }}
+              whileHover={{ borderColor: 'rgba(255, 255, 255, 0.25)', backgroundColor: 'rgba(255, 255, 255, 0.03)' }}
+              style={{ 
+                position: 'relative',
+                padding: '1.75rem',
+                borderRadius: '16px',
+                backgroundColor: 'rgba(255, 255, 255, 0.015)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(10px)',
+                transition: 'all 0.3s ease'
+              }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1rem', flexWrap: 'wrap' }}>
-                <h4 style={{ fontSize: '1.2rem', fontWeight: 600 }}>{exp.position} — {exp.company}</h4>
-                <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem' }}>{exp.period}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffffff' }}>{exp.position} — <span style={{ color: '#93c5fd' }}>{exp.company}</span></h4>
+                <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.05em' }}>{exp.period}</span>
               </div>
-              <ul style={{ color: 'var(--text-secondary)', fontSize: '1rem', paddingLeft: '1rem', listStyleType: 'circle', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <ul style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', paddingLeft: '1.2rem', listStyleType: 'disc', display: 'flex', flexDirection: 'column', gap: '0.6rem', lineHeight: 1.5 }}>
                 {exp.responsibilities.map((resp, idx) => (
                   <li key={idx}>{resp}</li>
                 ))}
@@ -88,12 +97,12 @@ const About = () => {
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
-          style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}
+          style={{ fontSize: '1.4rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', borderBottom: '1px solid rgba(255, 255, 255, 0.15)', paddingBottom: '0.8rem' }}
         >
           Education
         </motion.h3>
         
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginBottom: '4rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '4rem' }}>
           {about.education.map((edu, i) => (
             <motion.div 
               key={i} 
@@ -101,9 +110,15 @@ const About = () => {
               whileInView="show"
               viewport={{ once: true, margin: "-60px" }}
               variants={itemVars}
+              style={{
+                padding: '1.25rem 1.5rem',
+                borderRadius: '12px',
+                backgroundColor: 'rgba(255, 255, 255, 0.015)',
+                border: '1px solid rgba(255, 255, 255, 0.06)'
+              }}
             >
               <h4 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{edu.degree}</h4>
-              <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem' }}>{edu.institution}</div>
+              <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.3rem' }}>{edu.institution}</div>
             </motion.div>
           ))}
         </div>
@@ -114,7 +129,7 @@ const About = () => {
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
-          style={{ fontSize: '1.5rem', marginBottom: '2rem', borderBottom: '1px solid var(--text-muted)', paddingBottom: '1rem' }}
+          style={{ fontSize: '1.4rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', borderBottom: '1px solid rgba(255, 255, 255, 0.15)', paddingBottom: '0.8rem' }}
         >
           Expertise & Tools
         </motion.h3>
@@ -128,28 +143,30 @@ const About = () => {
               viewport={{ once: true, margin: "-60px" }}
               variants={itemVars}
             >
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--text-secondary)' }}>{skillGroup.category}</h4>
+              <h4 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.8rem', color: 'var(--text-secondary)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{skillGroup.category}</h4>
               <motion.div 
                 variants={skillsContainerVars}
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, margin: "-50px" }}
-                style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}
               >
                 {skillGroup.items.map(skill => (
                   <motion.span
                     key={skill}
                     variants={skillTagVars}
-                    whileHover={{ scale: 1.06, color: '#ffffff', borderColor: '#ffffff', boxShadow: '0 0 12px rgba(255,255,255,0.15)' }}
+                    whileHover={{ scale: 1.05, color: '#ffffff', backgroundColor: 'rgba(255, 255, 255, 0.12)', borderColor: 'rgba(255, 255, 255, 0.4)', boxShadow: '0 0 15px rgba(255,255,255,0.15)' }}
                     className="clickable-skill"
                     style={{ 
-                      border: '1px solid var(--text-muted)', 
-                      padding: '0.5rem 1rem', 
+                      border: '1px solid rgba(255, 255, 255, 0.15)', 
+                      padding: '0.45rem 1rem', 
                       borderRadius: '50px', 
-                      fontSize: '0.9rem', 
+                      fontSize: '0.88rem', 
                       cursor: 'pointer', 
                       display: 'inline-block',
-                      transition: 'color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease'
+                      backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                      color: 'var(--text-secondary)',
+                      transition: 'all 0.25 ease'
                     }}
                   >
                     {skill}
@@ -165,4 +182,5 @@ const About = () => {
 };
 
 export default About;
+
 

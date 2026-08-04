@@ -34,8 +34,11 @@ function App() {
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a');
       if (target && target.getAttribute('href')?.startsWith('#')) {
-        e.preventDefault();
-        lenis.scrollTo(target.getAttribute('href'));
+        const href = target.getAttribute('href');
+        if (href.length > 1) {
+          e.preventDefault();
+          lenis.scrollTo(href);
+        }
       }
     };
     document.addEventListener('click', handleAnchorClick);
@@ -59,10 +62,9 @@ function App() {
         <Projects />
       </main>
       <footer 
-        id="contact" 
         style={{ 
           position: 'relative', 
-          height: '100vh', 
+          minHeight: '100vh', 
           clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)',
           transform: 'translateZ(0)',
           willChange: 'clip-path'
@@ -70,11 +72,9 @@ function App() {
       >
         <div 
           style={{ 
-            position: 'fixed', 
-            bottom: 0, 
-            left: 0, 
+            position: 'relative', 
             width: '100%', 
-            height: '100vh',
+            minHeight: '100vh',
             transform: 'translate3d(0, 0, 0)',
             willChange: 'transform'
           }}
@@ -87,3 +87,4 @@ function App() {
 }
 
 export default App;
+
