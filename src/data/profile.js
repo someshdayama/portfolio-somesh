@@ -5,10 +5,10 @@ import radarImg from '../assets/career-radar.webp';
 
 export const PROFILE = {
   hero: {
-    summary: "Friendly neighbourhood Software Engineer building cloud infrastructure, automated pipelines, and custom AI agents."
+    summary: "Your nighbourhood Software Engineer building cloud infrastructure, automated pipelines, custom AI agents and more."
   },
   about: {
-    summary: "With over 3 years of experience in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I take care of the AMPS product as the Release Train Engineer (RTE), representing the product at the management level, aligning release cycles and mitigating risks. Recently I've also been building custom AI agents to automate development workflows.",
+    summary: "With a solid experience of nearly 4 years in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I take care of the AMPS product as the Release Train Engineer (RTE), representing the product at the management level, aligning release cycles and mitigating risks. Recently I've also been building custom AI agents to automate development workflows.",
     experience: [
       {
         company: "NCR Atleos Corporation",
