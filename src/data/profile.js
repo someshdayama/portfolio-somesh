@@ -2,24 +2,25 @@ import velocityImg from '../assets/velocity.webp';
 import weatherImg from '../assets/weather.webp';
 import resumeImg from '../assets/resume-builder.webp';
 import radarImg from '../assets/career-radar.webp';
+import ampsImg from '../assets/amps-capacity.webp';
 
 export const PROFILE = {
   hero: {
-    summary: "Your nighbourhood Software Engineer building cloud infrastructure, automated pipelines, custom AI agents and more."
+    summary: "Your neighbourhood Software Engineer & Release Train Engineer — building cloud infrastructure, CI/CD pipelines, custom AI agents, and more."
   },
   about: {
-    summary: "With a solid experience of nearly 4 years in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I take care of the AMPS product as the Release Train Engineer (RTE), representing the product at the management level, aligning release cycles and mitigating risks. Recently I've also been building custom AI agents to automate development workflows.",
+    summary: "With nearly 4 years in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I own the AMPS product as Release Train Engineer (RTE), representing it at the management level, aligning release cycles, and mitigating risks. Lately I've also been building custom AI agents to automate development workflows.",
     experience: [
       {
         company: "NCR Atleos Corporation",
         position: "Software Engineer",
         period: "Feb 2025 - Present",
         responsibilities: [
-          "Manage release lifecycles and cross-functional CI/CD coordination on Azure as the Release Train Engineer (RTE).",
+          "Manage AMPS release lifecycles and cross-functional CI/CD coordination on Azure as the Release Train Engineer (RTE).",
           "Serve as Scrum Master for an 18-member squad, facilitating ceremonies and clearing blockers to boost velocity.",
-          "Writing and implementing CI/CD pipelines using Azure DevOps and Jenkins, also migrating Jenkins to Github Workflows.",
-          "Provisioned and scaled Azure infrastructure (AKS, VM's) using Helm, Ansible, and Jenkins.",
-          "Automating the process of initial development phase by implementing AI agents."
+          "Write and implement CI/CD pipelines with Azure DevOps and Jenkins, and migrate Jenkins pipelines to GitHub Workflows.",
+          "Provision and scale Azure infrastructure (AKS, VMs) using Helm, Ansible, and Jenkins.",
+          "Automate early-phase development workflows by implementing AI agents."
         ]
       },
       {
@@ -37,7 +38,7 @@ export const PROFILE = {
         position: "Trainee Software Engineer",
         period: "Jan 2023 - Apr 2023",
         responsibilities: [
-          "Automated Jenkins pipelines for the Domino's App (Jubilant Foods) to cut down cycle times and manual efforts.",
+          "Automated Jenkins pipelines for the Domino's App (Jubilant Foods) to cut cycle times and manual effort.",
           "Provisioned dynamic staging environments using AWS core services and managed Linux virtual environments."
         ]
       }
@@ -59,19 +60,23 @@ export const PROFILE = {
       },
       {
         category: "Infrastructure & Containerization",
-        items: ["Terraform", "Ansible", "Docker", "Kubernetes (GKE)", "Helm"]
+        items: ["Terraform", "Ansible", "Docker", "Kubernetes (AKS)", "Helm"]
       },
       {
         category: "CI/CD & Automation",
-        items: ["Jenkins", "GitHub Actions", "Maven"]
+        items: ["Jenkins", "GitHub Actions", "Azure DevOps", "Maven"]
       },
       {
         category: "Scripting & Languages",
         items: ["Java", "Python", "Groovy", "Bash", "Linux Shell", "SQL"]
       },
       {
-        category: "Observability & Tools",
-        items: ["Prometheus", "Grafana", "Git", "JIRA"]
+        category: "Observability",
+        items: ["Prometheus", "Grafana"]
+      },
+      {
+        category: "Collaboration & Tools",
+        items: ["Git", "JIRA"]
       },
       {
         category: "Concepts",
@@ -80,6 +85,14 @@ export const PROFILE = {
     ]
   },
   projects: [
+    {
+      title: "AMPS Capacity Planner",
+      description: "Sprint-wise capacity allocation, leave management, and team velocity tracking for agile product teams — with decentralized multi-user sync via Firebase.",
+      link: null,
+      repo: "https://github.com/someshdayama/amps-capacity-planner",
+      techStack: ["JavaScript", "Firebase", "Firestore", "HTML/CSS"],
+      image: ampsImg
+    },
     {
       title: "Career Radar",
       description: "Real-time job search and aggregation streaming dashboard scanning listings from top tech firms using Server-Sent Events (SSE).",
@@ -92,7 +105,7 @@ export const PROFILE = {
       title: "Velocity",
       description: "Network Speed Testing Application designed to measure download, upload, and latency with high precision.",
       link: "https://velocity-speedtest.netlify.app/",
-      repo: "https://github.com/someshdayama/velocity",
+      repo: "https://github.com/someshdayama/speedtest",
       techStack: ["React", "Vite", "JavaScript", "CSS"],
       image: velocityImg
     },

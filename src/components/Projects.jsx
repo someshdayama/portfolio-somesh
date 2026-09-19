@@ -139,7 +139,7 @@ const ProjectRow = ({ project, i, isEven }) => {
         {/* STATIC MOUSE DETECTOR OVERLAY (prevents 3D tilt jitter feedback loop) */}
         <a
           ref={imageRef}
-          href={project.link}
+          href={project.link || project.repo}
           target="_blank"
           rel="noopener noreferrer"
           onMouseMove={handleMouseMove}
@@ -190,11 +190,13 @@ const ProjectRow = ({ project, i, isEven }) => {
               GitHub Repo ↗
             </a>
           </Magnetic>
-          <Magnetic>
-            <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.82rem', display: 'inline-block', padding: '6px 0', color: '#ffffff' }}>
-              Live Application ↗
-            </a>
-          </Magnetic>
+          {project.link && (
+            <Magnetic>
+              <a href={project.link} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.82rem', display: 'inline-block', padding: '6px 0', color: '#ffffff' }}>
+                Live Application ↗
+              </a>
+            </Magnetic>
+          )}
         </motion.div>
       </motion.div>
     </div>

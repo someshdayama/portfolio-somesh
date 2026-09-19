@@ -9,7 +9,8 @@ const CATEGORY_ICONS = {
   'Infrastructure & Containerization': '🐳',
   'CI/CD & Automation': '⚙️',
   'Scripting & Languages': '💻',
-  'Observability & Tools': '📊',
+  'Observability': '📊',
+  'Collaboration & Tools': '🧩',
   'Concepts': '🧠',
 };
 
@@ -19,7 +20,8 @@ const CATEGORY_ACCENT = {
   'Infrastructure & Containerization': 'rgba(52, 211, 153, 0.10)',
   'CI/CD & Automation': 'rgba(251, 191, 36, 0.10)',
   'Scripting & Languages': 'rgba(167, 139, 250, 0.10)',
-  'Observability & Tools': 'rgba(251, 113, 133, 0.10)',
+  'Observability': 'rgba(251, 113, 133, 0.10)',
+  'Collaboration & Tools': 'rgba(148, 163, 184, 0.10)',
   'Concepts': 'rgba(255, 255, 255, 0.06)',
 };
 
@@ -28,7 +30,8 @@ const CATEGORY_BORDER = {
   'Infrastructure & Containerization': 'rgba(52, 211, 153, 0.2)',
   'CI/CD & Automation': 'rgba(251, 191, 36, 0.2)',
   'Scripting & Languages': 'rgba(167, 139, 250, 0.2)',
-  'Observability & Tools': 'rgba(251, 113, 133, 0.2)',
+  'Observability': 'rgba(251, 113, 133, 0.2)',
+  'Collaboration & Tools': 'rgba(148, 163, 184, 0.2)',
   'Concepts': 'rgba(255, 255, 255, 0.08)',
 };
 
