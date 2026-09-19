@@ -29,6 +29,16 @@ html, body {
   scroll-behavior: smooth;
 }
 
+/* Offset sticky/fixed navbar when jumping to sections */
+section[id],
+[id="about"],
+[id="projects"],
+[id="contact"],
+[id="skills"],
+[id="hero"] {
+  scroll-margin-top: 5.5rem;
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
   display: none;

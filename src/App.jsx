@@ -37,7 +37,7 @@ function App() {
         const href = target.getAttribute('href');
         if (href.length > 1) {
           e.preventDefault();
-          lenis.scrollTo(href);
+          lenis.scrollTo(href, { offset: -88 });
         }
       }
     };
