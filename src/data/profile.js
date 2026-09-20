@@ -2,7 +2,6 @@ import velocityImg from '../assets/velocity.webp';
 import weatherImg from '../assets/weather.webp';
 import resumeImg from '../assets/resume-builder.webp';
 import radarImg from '../assets/career-radar.webp';
-import ampsImg from '../assets/amps-capacity.webp';
 
 export const PROFILE = {
   hero: {
@@ -85,14 +84,6 @@ export const PROFILE = {
     ]
   },
   projects: [
-    {
-      title: "AMPS Capacity Planner",
-      description: "Sprint-wise capacity allocation, leave management, and team velocity tracking for agile product teams — with decentralized multi-user sync via Firebase.",
-      link: null,
-      repo: "https://github.com/someshdayama/amps-capacity-planner",
-      techStack: ["JavaScript", "Firebase", "Firestore", "HTML/CSS"],
-      image: ampsImg
-    },
     {
       title: "Career Radar",
       description: "Real-time job search and aggregation streaming dashboard scanning listings from top tech firms using Server-Sent Events (SSE).",
