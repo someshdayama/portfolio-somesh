@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 import MaskedText from './ui/MaskedText';
@@ -60,13 +60,24 @@ const ProjectRow = ({ project, i, isEven }) => {
     }
   };
 
+  const [isNarrow, setIsNarrow] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches
+  );
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 768px)');
+    const onChange = () => setIsNarrow(media.matches);
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, []);
   const textItemVars = {
-    hidden: { opacity: 0, x: isEven ? 30 : -30 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } }
+    hidden: { opacity: 0, x: isNarrow ? 0 : (isEven ? 30 : -30), y: isNarrow ? 18 : 0 },
+    show: { opacity: 1, x: 0, y: 0, transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } }
   };
 
   return (
     <div
+      className="project-row"
       style={{
         display: 'flex',
         flexDirection: isEven ? 'row' : 'row-reverse',
@@ -184,7 +195,7 @@ const ProjectRow = ({ project, i, isEven }) => {
         </motion.div>
 
         {/* Links */}
-        <motion.div variants={textItemVars} style={{ display: 'flex', gap: '1.8rem', marginTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1rem' }}>
+        <motion.div variants={textItemVars} className="project-links" style={{ display: 'flex', gap: '1.8rem', marginTop: '0.5rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)', paddingTop: '1rem' }}>
           <Magnetic>
             <a href={project.repo} target="_blank" rel="noopener noreferrer" style={{ textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 600, fontSize: '0.82rem', display: 'inline-block', padding: '6px 0', color: 'var(--text-secondary)' }}>
               GitHub Repo ↗
@@ -214,7 +225,7 @@ const Projects = () => {
         </h2>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6.5rem', maxWidth: '1100px', margin: '0 auto' }}>
+      <div className="projects-stack" style={{ display: 'flex', flexDirection: 'column', gap: '6.5rem', maxWidth: '1100px', margin: '0 auto' }}>
         {projects.map((project, i) => {
           const isEven = i % 2 === 0;
           return (

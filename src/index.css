@@ -17,16 +17,32 @@
   box-sizing: border-box;
 }
 
+html {
+  /* Phone browsers reveal this color when the address bar hides. Transparent falls back to white. */
+  background-color: #000000;
+  color-scheme: dark;
+}
+
 html, body {
-  background-color: transparent;
+  background-color: #000000;
   color: var(--text-primary);
   font-family: var(--font-sans);
   line-height: 1.4;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-y: none;
   /* Smooth scrolling for anchor links */
   scroll-behavior: smooth;
+  min-height: 100%;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100%;
+  background-color: transparent;
 }
 
 /* Offset sticky/fixed navbar when jumping to sections */
@@ -81,7 +97,21 @@ ul {
 .app-container {
   position: relative;
   width: 100%;
+  min-height: 100%;
   background: transparent;
+}
+
+/* Fixed starfield sits above the page background and below the content.
+   A negative z-index hides it on phone browsers. */
+.starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh;
+  z-index: 0;
+  pointer-events: none;
+  background-color: #000000;
 }
 
 section {
@@ -92,6 +122,41 @@ section {
   flex-direction: column;
   justify-content: center;
   padding: 2rem 5vw;
+}
+
+/* First screen: name sits high, scroll cue ends the hero, Profile peeks in below. */
+#hero {
+  min-height: calc(100vh - 11rem);
+  min-height: calc(100svh - 11rem);
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(5.75rem, 10vh, 8rem) 4vw 1rem;
+}
+
+.hero-copy {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+  z-index: 10;
+}
+
+.hero-bridge {
+  width: 1px;
+  flex: 1 1 auto;
+  min-height: 1.75rem;
+  margin-top: 1.35rem;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.45));
+}
+
+.hero-scroll {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  z-index: 10;
 }
 
 /* Utilities */
@@ -118,7 +183,8 @@ section {
 }
 
 /* Focus outline accessibility for keyboard navigators */
-a:focus-visible {
+a:focus-visible,
+.copy-email:focus-visible {
   outline: 2px solid var(--text-primary);
   outline-offset: 4px;
   border-radius: 4px;
@@ -135,6 +201,35 @@ a:focus-visible {
   50% { opacity: 0.8; transform: scale(1.15); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
 }
 
+/* Email copy pill. Color stays inline so the copied state can tint it. */
+.copy-email {
+  margin-top: 1.5rem;
+  cursor: pointer;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
+  max-width: 100%;
+}
+
+.copy-hint {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+html.nav-open,
+html.nav-open body {
+  overflow: hidden;
+}
+
 /* Responsive Navigation Breakpoints */
 @media (max-width: 768px) {
   .desktop-nav {
@@ -142,15 +237,169 @@ a:focus-visible {
   }
   .mobile-hamburger {
     display: flex !important;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
   }
   .availability-text {
     display: none;
   }
-  section {
-    padding: 4rem 4vw !important;
+
+  /* Solid bar so section titles don't blend into the logo while scrolling. */
+  .navbar-container {
+    padding: calc(0.8rem + env(safe-area-inset-top)) calc(1.25rem + env(safe-area-inset-right)) 0.8rem calc(1.25rem + env(safe-area-inset-left)) !important;
+    background: rgba(0, 0, 0, 0.82);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    mix-blend-mode: normal !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
+
+  .mobile-menu {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100dvh !important;
+    background-color: #05050c !important;
+    padding: calc(5rem + env(safe-area-inset-top)) calc(1.5rem + env(safe-area-inset-right)) calc(2rem + env(safe-area-inset-bottom)) calc(1.5rem + env(safe-area-inset-left)) !important;
+  }
+
+  /* Desktop scrubber sits on top of copy at phone width. */
+  .scroll-progress {
+    display: none !important;
+  }
+
+  section {
+    min-height: 0;
+    justify-content: flex-start;
+    padding: 5.25rem calc(1.25rem + env(safe-area-inset-right)) 3.25rem calc(1.25rem + env(safe-area-inset-left)) !important;
+  }
+
+  #hero {
+    min-height: calc(100vh - 9.5rem) !important;
+    min-height: calc(100svh - 9.5rem) !important;
+    justify-content: flex-start !important;
+    padding-top: calc(4.75rem + env(safe-area-inset-top)) !important;
+    padding-right: calc(1.25rem + env(safe-area-inset-right)) !important;
+    padding-bottom: 0.75rem !important;
+    padding-left: calc(1.25rem + env(safe-area-inset-left)) !important;
+  }
+
+  #about {
+    padding-top: 0.85rem !important;
+  }
+
+  .text-huge {
+    font-size: clamp(2.55rem, 12vw, 4.25rem);
+  }
+
+  .text-title {
+    font-size: clamp(2.05rem, 9.5vw, 3.25rem);
+  }
+
+  .hero-summary {
+    margin: 1.6rem auto 0 !important;
+    font-size: 1.02rem !important;
+    line-height: 1.55 !important;
+    padding: 0 0.15rem;
+  }
+
+  .about-lead {
+    font-size: 1.05rem !important;
+    line-height: 1.65 !important;
+    margin-bottom: 2.5rem !important;
+  }
+
+  .exp-card {
+    padding: 1.15rem 1.05rem !important;
+  }
+
+  .exp-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.35rem !important;
+  }
+
+  .exp-header h4 {
+    font-size: 1.05rem !important;
+    line-height: 1.25;
+  }
+
+  .projects-stack {
+    gap: 3.25rem !important;
+  }
+
+  .project-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1.25rem !important;
+  }
+
+  .project-row > * {
+    flex: 1 1 auto !important;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .project-links {
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem !important;
+  }
+
   .contact-email-cta {
-    font-size: clamp(2.5rem, 8vw, 5rem) !important;
+    font-size: clamp(1.9rem, 9.2vw, 2.85rem) !important;
+    padding: 0.35rem 0 !important;
+    line-height: 1.05;
+  }
+
+  .copy-email {
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 22rem;
+    text-align: center;
+    gap: 0.2rem;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+  }
+
+  .email-address {
+    font-size: 0.95rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .copy-hint {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .social-row {
+    margin-top: 2.25rem !important;
+    gap: 0.35rem 0.75rem !important;
+    width: 100%;
+  }
+
+  .social-row a {
+    padding: 0.7rem 0.85rem !important;
+  }
+
+  #contact {
+    padding-bottom: calc(2.75rem + env(safe-area-inset-bottom)) !important;
+  }
+
+  section[id],
+  [id="about"],
+  [id="projects"],
+  [id="contact"],
+  [id="skills"],
+  [id="hero"] {
+    scroll-margin-top: 4.75rem;
   }
 }
 

@@ -2,11 +2,10 @@ import velocityImg from '../assets/velocity.webp';
 import weatherImg from '../assets/weather.webp';
 import resumeImg from '../assets/resume-builder.webp';
 import radarImg from '../assets/career-radar.webp';
-import ampsImg from '../assets/amps-capacity.webp';
 
 export const PROFILE = {
   hero: {
-    summary: "Your neighbourhood Software Engineer & Release Train Engineer — building cloud infrastructure, CI/CD pipelines, custom AI agents, and more."
+    summary: "Your neighbourhood Software Engineer for development, delivery and management."
   },
   about: {
     summary: "With nearly 4 years in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I own the AMPS product as Release Train Engineer (RTE), representing it at the management level, aligning release cycles, and mitigating risks. Lately I've also been building custom AI agents to automate development workflows.",
@@ -85,14 +84,6 @@ export const PROFILE = {
     ]
   },
   projects: [
-    {
-      title: "AMPS Capacity Planner",
-      description: "Sprint-wise capacity allocation, leave management, and team velocity tracking for agile product teams — with decentralized multi-user sync via Firebase.",
-      link: null,
-      repo: "https://github.com/someshdayama/amps-capacity-planner",
-      techStack: ["JavaScript", "Firebase", "Firestore", "HTML/CSS"],
-      image: ampsImg
-    },
     {
       title: "Career Radar",
       description: "Real-time job search and aggregation streaming dashboard scanning listings from top tech firms using Server-Sent Events (SSE).",

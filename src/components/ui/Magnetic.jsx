@@ -15,6 +15,7 @@ const Magnetic = ({ children }) => {
 
   const handleMouseMove = (e) => {
     if (!ref.current) return;
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
     const { clientX, clientY } = e;
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);

@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const lenis = window.__lenis;
+    if (mobileMenuOpen) {
+      document.documentElement.classList.add('nav-open');
+      lenis?.stop();
+    } else {
+      document.documentElement.classList.remove('nav-open');
+      lenis?.start();
+    }
+    return () => {
+      document.documentElement.classList.remove('nav-open');
+      window.__lenis?.start();
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { name: 'About', href: '#about' },
@@ -34,7 +49,8 @@ const Navbar = () => {
         {/* Brand / Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
           <a 
-            href="#hero" 
+            href="#hero"
+            onClick={() => setMobileMenuOpen(false)}
             style={{ 
               fontWeight: 800, 
               fontSize: '1.5rem', 
@@ -98,6 +114,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: '-100%' }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="mobile-menu"
             style={{
               position: 'fixed',
               top: 0,

@@ -29,7 +29,8 @@ function App() {
     }
 
     rafId = requestAnimationFrame(raf);
-    
+    window.__lenis = lenis;
+
     // Smooth scroll for anchor links
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a');
@@ -37,6 +38,12 @@ function App() {
         const href = target.getAttribute('href');
         if (href.length > 1) {
           e.preventDefault();
+          // Lenis ignores scrollTo while stopped. start() before scrollTo so the
+          // menu effect's later start() is a no-op and does not cancel this scroll.
+          if (lenis.isStopped) {
+            document.documentElement.classList.remove('nav-open');
+            lenis.start();
+          }
           lenis.scrollTo(href, { offset: -88 });
         }
       }
@@ -46,6 +53,7 @@ function App() {
     return () => {
       document.removeEventListener('click', handleAnchorClick);
       cancelAnimationFrame(rafId);
+      if (window.__lenis === lenis) delete window.__lenis;
       lenis.destroy();
     };
   }, []);

@@ -26,6 +26,7 @@ const ScrollProgress = () => {
       ref={containerRef}
       onClick={handleScrollTo}
       whileHover="hover"
+      className="scroll-progress"
       style={{ 
         position: 'fixed', 
         right: '12px', 

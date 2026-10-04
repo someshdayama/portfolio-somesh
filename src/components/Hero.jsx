@@ -36,22 +36,8 @@ const Hero = () => {
   };
 
   return (
-    <section
-      ref={containerRef}
-      id="hero"
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        position: 'relative',
-        padding: '6rem 4vw 4rem 4vw'
-      }}
-    >
-      <motion.div
-        style={{ y, opacity, textAlign: 'center', zIndex: 10, width: '100%', maxWidth: '900px' }}
-      >
+    <section ref={containerRef} id="hero">
+      <motion.div className="hero-copy" style={{ y, opacity }}>
         <h1 className="text-huge">
           <MaskedText delay={0.0} useAnimate>Somesh</MaskedText><br />
           <MaskedText delay={0.15} className="font-serif" useAnimate>Dayama</MaskedText>
@@ -61,20 +47,21 @@ const Hero = () => {
           variants={containerVars}
           initial="hidden"
           animate="visible"
-          className="text-body"
+          className="text-body hero-summary"
           style={{ 
             margin: '2.5rem auto 0', 
             fontSize: 'clamp(1rem, 1.4vw, 1.25rem)', 
-            maxWidth: '560px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '0.3em',
-            lineHeight: 1.5
+            maxWidth: '36rem',
+            lineHeight: 1.55,
+            textWrap: 'balance'
           }}
         >
           {words.map((word, i) => (
-            <motion.span key={i} variants={wordVars} style={{ display: 'inline-block' }}>
+            <motion.span
+              key={i}
+              variants={wordVars}
+              style={{ display: 'inline-block', marginRight: i === words.length - 1 ? 0 : '0.28em' }}
+            >
               {word}
             </motion.span>
           ))}
@@ -82,20 +69,11 @@ const Hero = () => {
 
       </motion.div>
 
-      {/* Scroll Indicator */}
+      <div className="hero-bridge" aria-hidden="true" />
+
       <motion.div
-        style={{
-          position: 'absolute',
-          bottom: '2rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '0.5rem',
-          opacity,
-          zIndex: 10
-        }}
+        className="hero-scroll"
+        style={{ opacity }}
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.1, duration: 0.6 }}

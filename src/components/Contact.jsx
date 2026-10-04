@@ -79,26 +79,20 @@ const Contact = () => {
         {/* Email button with copy to clipboard functionality */}
         <motion.div 
           variants={itemVars}
-          onClick={handleCopy} 
-          style={{ 
-            marginTop: '1.5rem', 
-            cursor: 'pointer', 
-            fontSize: 'clamp(1rem, 1.5vw, 1.25rem)', 
-            color: copied ? '#34d399' : 'var(--text-secondary)',
-            fontWeight: 500,
-            letterSpacing: '0.05em',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.5rem 1.2rem',
-            borderRadius: '30px',
-            backgroundColor: 'rgba(255, 255, 255, 0.04)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            transition: 'all 0.3s ease'
+          onClick={handleCopy}
+          className="copy-email"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleCopy();
+            }
           }}
+          style={{ color: copied ? '#34d399' : 'var(--text-secondary)' }}
         >
-          <span>{PROFILE.contact.email}</span>
-          <span style={{ fontSize: '0.85rem', opacity: 0.8 }}>({copied ? '✓ Copied' : 'Click to Copy'})</span>
+          <span className="email-address">{PROFILE.contact.email}</span>
+          <span className="copy-hint" aria-live="polite">{copied ? 'Copied' : 'Click to copy'}</span>
         </motion.div>
 
         {/* Toast confirmation */}
@@ -129,6 +123,7 @@ const Contact = () => {
         {/* Socials & Recruiter links */}
         <motion.div 
           variants={itemVars}
+          className="social-row"
           style={{ 
             marginTop: '3.5rem', 
             display: 'flex', 

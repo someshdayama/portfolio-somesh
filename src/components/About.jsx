@@ -31,7 +31,7 @@ const About = () => {
   const { about } = PROFILE;
 
   return (
-    <section id="about" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '6rem 6vw 4rem 6vw', position: 'relative' }}>
+    <section id="about" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: '1.75rem 6vw 4rem 6vw', position: 'relative' }}>
       <div style={{ maxWidth: '920px', width: '100%' }}>
         <h2 className="text-title font-serif" style={{ marginBottom: '3rem' }}>
           <MaskedText>Profile</MaskedText>
@@ -42,7 +42,7 @@ const About = () => {
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
           variants={itemVars}
-          className="text-body" 
+          className="text-body about-lead" 
           style={{ fontSize: 'clamp(1.15rem, 1.8vw, 1.55rem)', lineHeight: 1.6, color: 'var(--text-primary)', marginBottom: '4rem', maxWidth: '100%' }}
         >
           {about.summary}
@@ -68,6 +68,7 @@ const About = () => {
               viewport={{ once: true, margin: "-60px" }}
               variants={itemVars}
               whileHover={{ borderColor: 'rgba(255, 255, 255, 0.25)', backgroundColor: 'rgba(255, 255, 255, 0.03)' }}
+              className="exp-card"
               style={{ 
                 position: 'relative',
                 padding: '1.75rem',
@@ -78,7 +79,7 @@ const About = () => {
                 transition: 'all 0.3s ease'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div className="exp-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <h4 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#ffffff' }}>{exp.position} — <span style={{ color: '#93c5fd' }}>{exp.company}</span></h4>
                 <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.05em' }}>{exp.period}</span>
               </div>

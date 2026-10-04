@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useScroll, useVelocity, useSpring } from 'framer-motion';
 
 const StarryBackground = () => {
@@ -42,21 +43,27 @@ const StarryBackground = () => {
     ];
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const viewport = window.visualViewport;
+      const width = Math.max(1, Math.round(viewport?.width || window.innerWidth));
+      const height = Math.max(1, Math.round(Math.max(window.innerHeight, viewport?.height || 0)));
+      // Ignore the small height change from the mobile address bar so stars don't reset mid-scroll.
+      if (stars.length > 0 && canvas.width === width && Math.abs(canvas.height - height) < 120) return;
+      canvas.width = width;
+      canvas.height = height;
       initStars();
     };
 
     const initStars = () => {
       stars = [];
-      const numStars = Math.floor((canvas.width * canvas.height) / 1800);
+      const narrow = canvas.width < 800;
+      const numStars = Math.floor((canvas.width * canvas.height) / (narrow ? 850 : 1800));
       for (let i = 0; i < numStars; i++) {
         stars.push({
           x: (Math.random() - 0.5) * canvas.width * 2.2,
           y: (Math.random() - 0.5) * canvas.height * 2.2,
           z: Math.random() * maxZ,
           o: Math.random() * 0.75 + 0.25,
-          size: Math.random() * 1.6 + 0.6,
+          size: Math.random() * 1.6 + (narrow ? 1.15 : 0.6),
           color: colors[Math.floor(Math.random() * colors.length)],
           twinklePhase: Math.random() * Math.PI * 2,
           twinkleSpeed: 0.02 + Math.random() * 0.03
@@ -65,6 +72,7 @@ const StarryBackground = () => {
     };
 
     window.addEventListener('resize', resize);
+    window.visualViewport?.addEventListener('resize', resize);
     resize();
 
     const draw = () => {
@@ -104,7 +112,7 @@ const StarryBackground = () => {
         const k = 128.0 / star.z;
         const px = star.x * k + centerX;
         const py = star.y * k + centerY;
-        const s = Math.max(star.size * k, 0.7);
+        const s = Math.max(star.size * k, canvas.width < 800 ? 1.2 : 0.7);
 
         if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
           const distanceFade = Math.max(0, Math.min(1, 1 - (star.z / maxZ)));
@@ -142,24 +150,14 @@ const StarryBackground = () => {
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', resize);
+      window.visualViewport?.removeEventListener('resize', resize);
       cancelAnimationFrame(animationFrameId);
     };
   }, [smoothVelocity]);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: -1,
-        pointerEvents: 'none',
-        backgroundColor: '#000000'
-      }}
-    />
+  return createPortal(
+    <canvas ref={canvasRef} className="starfield" />,
+    document.body
   );
 };
 
