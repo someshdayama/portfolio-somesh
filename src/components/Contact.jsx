@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Magnetic from './ui/Magnetic';
 import MaskedText from './ui/MaskedText';
+import VenomButton from './ui/VenomButton';
 import { PROFILE } from '../data/profile';
 
 const Contact = () => {
@@ -64,16 +65,15 @@ const Contact = () => {
           <MaskedText>Let's Work Together</MaskedText>
         </motion.h2>
 
-        <motion.div variants={itemVars}>
-          <Magnetic>
-            <a 
-              href={`mailto:${PROFILE.contact.email}`} 
-              className="text-huge contact-email-cta" 
-              style={{ display: 'inline-block', padding: '1rem 2rem' }}
-            >
-              Get In Touch
-            </a>
-          </Magnetic>
+        {/* Venom button: goo strings reach for the cursor when it comes near (see ui/VenomButton.jsx) */}
+        <motion.div variants={itemVars} style={{ margin: '0.5rem 0 0.75rem' }}>
+          <VenomButton
+            href={`mailto:${PROFILE.contact.email}`}
+            className="contact-email-cta"
+            aria-label={`Get in touch: email ${PROFILE.contact.email}`}
+          >
+            Get In Touch
+          </VenomButton>
         </motion.div>
 
         {/* Email button with copy to clipboard functionality */}
