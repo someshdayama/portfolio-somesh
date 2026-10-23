@@ -350,12 +350,6 @@ html.nav-open body {
     gap: 0.75rem 1.25rem !important;
   }
 
-  .contact-email-cta {
-    font-size: clamp(1.9rem, 9.2vw, 2.85rem) !important;
-    padding: 0.35rem 0 !important;
-    line-height: 1.05;
-  }
-
   .copy-email {
     flex-direction: column;
     justify-content: center;
