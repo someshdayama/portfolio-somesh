@@ -5,21 +5,21 @@ import radarImg from '../assets/career-radar.webp';
 
 export const PROFILE = {
   hero: {
-    summary: "Your neighbourhood Software Engineer for development, delivery and management."
+    summary: "Your neighbourhood Software Engineer and Release Train Engineer for development, delivery and management."
   },
   about: {
-    summary: "With nearly 4 years in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I own the AMPS product as Release Train Engineer (RTE), representing it at the management level, aligning release cycles, and mitigating risks. Lately I've also been building custom AI agents to automate development workflows.",
+    summary: "With nearly 4 years in cloud infrastructure, CI/CD automation, and site reliability, I focus on optimizing architectures on GCP, Azure, and AWS to reduce costs and keep deployments fast. At NCR Atleos, I own the AMPS product as Release Train Engineer (RTE) for 5 teams (21 team members), representing it at the management level, aligning release cycles, and mitigating risks. I am a Certified Scrum Master, and I build AI agents that automate SDLC tasks and Jira workflows.",
     experience: [
       {
         company: "NCR Atleos Corporation",
-        position: "Software Engineer",
+        position: "Software Engineer & Release Train Engineer",
         period: "Feb 2025 - Present",
         responsibilities: [
-          "Manage AMPS release lifecycles and cross-functional CI/CD coordination on Azure as the Release Train Engineer (RTE).",
-          "Serve as Scrum Master for an 18-member squad, facilitating ceremonies and clearing blockers to boost velocity.",
+          "Release Train Engineer (RTE) for AMPS, running release planning and delivery across 5 teams (21 team members).",
+          "Certified Scrum Master, facilitating ceremonies and clearing blockers across those teams.",
           "Write and implement CI/CD pipelines with Azure DevOps and Jenkins, and migrate Jenkins pipelines to GitHub Workflows.",
           "Provision and scale Azure infrastructure (AKS, VMs) using Helm, Ansible, and Jenkins.",
-          "Automate early-phase development workflows by implementing AI agents."
+          "Built AI agents that automate SDLC tasks and Jira workflows for the engineering teams."
         ]
       },
       {
@@ -52,6 +52,11 @@ export const PROFILE = {
         institution: "Prestige Institute of Management and Research, Indore — 2020"
       }
     ],
+    certifications: [
+      {
+        name: "Certified Scrum Master (CSM)"
+      }
+    ],
     skills: [
       {
         category: "Cloud Providers",
@@ -79,7 +84,7 @@ export const PROFILE = {
       },
       {
         category: "Concepts",
-        items: ["System Design", "Agile/Scrum"]
+        items: ["System Design", "Agile/Scrum", "Release Train Management", "AI agents for SDLC automation"]
       }
     ]
   },
