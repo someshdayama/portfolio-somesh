@@ -124,6 +124,44 @@ const About = () => {
           ))}
         </div>
 
+        {/* Certifications Section */}
+        {about.certifications?.length > 0 && (
+          <>
+            <motion.h3
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={itemVars}
+              style={{ fontSize: '1.4rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2rem', borderBottom: '1px solid rgba(255, 255, 255, 0.15)', paddingBottom: '0.8rem' }}
+            >
+              Certifications
+            </motion.h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '4rem' }}>
+              {about.certifications.map((cert, i) => (
+                <motion.div
+                  key={i}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: "-60px" }}
+                  variants={itemVars}
+                  style={{
+                    padding: '1.25rem 1.5rem',
+                    borderRadius: '12px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.015)',
+                    border: '1px solid rgba(255, 255, 255, 0.06)'
+                  }}
+                >
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 600 }}>{cert.name}</h4>
+                  {cert.detail && (
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.3rem' }}>{cert.detail}</div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </>
+        )}
+
         {/* Skills/Tools Section */}
         <motion.h3 
           initial="hidden"
